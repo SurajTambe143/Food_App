@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavigationViewFont" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/cairo_regular</item>
+    </style>
+</resources>
