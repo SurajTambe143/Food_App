@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.Orientation
@@ -80,6 +81,8 @@ class HomeFragment : Fragment() {
         binding.rvFoodCategory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
         foodCategoryAdapter = FoodCategoryAdapter(foodCategoryList)
         binding.rvFoodCategory.adapter = foodCategoryAdapter
+        val snapHelper = LinearSnapHelper() // Or PagerSnapHelper
+        snapHelper.attachToRecyclerView(binding.rvFoodCategory)
     }
 
     private fun menu() {
