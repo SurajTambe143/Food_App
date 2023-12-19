@@ -14,5 +14,12 @@
         <item name="colorAccent">@color/nav_color</item>
     </style>
 
+    <style name="OffersBorder" parent="">
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/dimen_100dp</item>
+        <item name="cornerSizeBottomRight">@dimen/dimen_100dp</item>
+    </style>
+
     <style name="Theme.DummyApp" parent="Base.Theme.DummyApp" />
 </resources>

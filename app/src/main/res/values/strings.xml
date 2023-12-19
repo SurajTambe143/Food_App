@@ -9,5 +9,18 @@
     <string name="active_order">Active order</string>
     <string name="order_number">Order Number - 5th Avenue - AI Furjan Area</string>
     <string name="txt_menu">Food</string>
+    <string name="item_food_details_txt">Ultimate Chicken - Wraps, Pl</string>
     <string name="offers">Get $0 delivery fee on your first order over $10!</string>
+    <string name="item_food_details_likes_txt">500+</string>
+    <string name="item_food_details_distance_txt">2.5 KM Away</string>
+    <string name="item_food_details_time_txt">25–45 Mins</string>
+    <string name="item_food_details_iqd_txt">IQD 1000</string>
+    <string name="item_food_details_rating_txt">3.4 Excellent</string>
+    <string name="txt_offers_on_selected_item">Get 20% off selected items</string>
+    <string name="txt_low_delivery_fee">Low delivery fee</string>
+    <string name="txt_hrz_home_order">Order Again</string>
+    <string name="txt_hrz_see_more">See More</string>
+    <string name="txt_error_msg">Could not connect to the internet. Please check your network</string>
+    <string name="txt_retry">Try Again</string>
+    <string name="txt_loding_msg">Try searching with food emoji today</string>
 </resources>

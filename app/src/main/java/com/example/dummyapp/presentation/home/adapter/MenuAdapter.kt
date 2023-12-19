@@ -34,4 +34,5 @@ class MenuAdapter(private val menuList: List<MenuItem>) :
             }
         }
     }
+
 }

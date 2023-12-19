@@ -9,8 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.FragmentHomeBinding
 import com.example.dummyapp.domain.model.FoodCategory
+import com.example.dummyapp.domain.model.HomeOrderFoodDetails
 import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OffersItem
+import com.example.dummyapp.domain.model.OrderFoodDetails
+import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
+import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 
 
@@ -22,6 +26,8 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewList: List<HomeView>
     private lateinit var homeAdapter: HomeAdapter
     private lateinit var images: List<OffersItem>
+    private lateinit var hrzOrderList: List<OrderFoodDetails>
+    private lateinit var homeHrzOrderList: List<HomeOrderFoodDetails>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +43,17 @@ class HomeFragment : Fragment() {
         setUpUI()
     }
 
+
     private fun setUpUI() {
         loadLists()
         homeViewList = listOf(
-            HomeView.OrderStatusView,
-            HomeView.BannerView,
+            HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
+            HomeView.BannerView(R.drawable.banner_img),
             HomeView.MenuView(menuList),
             HomeView.OffersView(images),
-            HomeView.FoodCategoryView(foodCategoryList)
+            HomeView.FoodCategoryView(foodCategoryList),
+            HomeView.HomeHorizontalOrderView(homeHrzOrderList),
+            HomeView.HomeVerticalOrderView(hrzOrderList)
         )
         binding.rvHome.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -56,6 +65,62 @@ class HomeFragment : Fragment() {
         loadMenu()
         loadCategory()
         loadOffers()
+        loadHorizontalOrder()
+    }
+
+    private fun loadHorizontalOrder() {
+        hrzOrderList = listOf(
+            OrderFoodDetails(
+                R.drawable.food_items_rectangle_img,
+                "Ultimate Chicken - Wraps, Pl",
+                "500+",
+                "2.5 KM Away",
+                "25 - 45 Mins",
+                "IQD 1000",
+                "3.4 Excellent"
+            ),
+            OrderFoodDetails(
+                R.drawable.food_items_rectangle_img,
+                "Ultimate Chicken - Wraps, Pl",
+                "500+",
+                "2.5 KM Away",
+                "25 - 45 Mins",
+                "IQD 1000",
+                "3.4 Excellent"
+            ),
+            OrderFoodDetails(
+                R.drawable.food_items_rectangle_img,
+                "Ultimate Chicken - Wraps, Pl",
+                "500+",
+                "2.5 KM Away",
+                "25 - 45 Mins",
+                "IQD 1000",
+                "3.4 Excellent"
+            ),
+            OrderFoodDetails(
+                R.drawable.food_items_rectangle_img,
+                "Ultimate Chicken - Wraps, Pl",
+                "500+",
+                "2.5 KM Away",
+                "25 - 45 Mins",
+                "IQD 1000",
+                "3.4 Excellent"
+            ),
+        )
+        homeHrzOrderList= listOf(
+            HomeOrderFoodDetails(
+                "Order Again",
+                hrzOrderList
+            ),
+            HomeOrderFoodDetails(
+                "Order Again",
+                hrzOrderList
+            ),
+            HomeOrderFoodDetails(
+                "Order Again",
+                hrzOrderList
+            )
+        )
     }
 
     private fun loadOffers() {
