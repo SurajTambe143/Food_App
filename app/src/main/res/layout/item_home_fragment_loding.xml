@@ -23,16 +23,35 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ProgressBar
-        android:id="@+id/loading_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:rotation="-90"
-        android:progressDrawable="@drawable/customize_circular_progress_bar"
+<!--    <ProgressBar-->
+<!--        android:id="@+id/loading_progress"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:indeterminate="true"-->
+<!--        android:rotation="-90"-->
+<!--        android:progressDrawable="@drawable/customize_circular_progress_bar"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/txt_loading_msg"/>-->
+
+    <ImageView
+        android:id="@+id/loading_progress_outer"
+        android:layout_width="@dimen/dimen_50dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:src="@drawable/ic_arc_outer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_loading_msg"/>
+
+    <ImageView
+        android:id="@+id/loading_progress_inner"
+        android:layout_width="@dimen/dimen_35dp"
+        android:layout_height="@dimen/dimen_50dp"
+        android:src="@drawable/ic_arc_inner"
+        app:layout_constraintTop_toTopOf="@id/loading_progress_outer"
+        app:layout_constraintStart_toStartOf="@id/loading_progress_outer"
+        app:layout_constraintEnd_toEndOf="@id/loading_progress_outer"
+        app:layout_constraintTop_toBottomOf="@id/loading_progress_outer"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
