@@ -25,6 +25,7 @@ import com.example.dummyapp.presentation.home.adapter.HomeOffersAdapter
 import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.MenuAdapter
 import com.example.dummyapp.presentation.home.adapter.MenuItemOffsetDecoration
+import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -149,7 +150,7 @@ class HomeAdapter(private val items: List<HomeView>) :
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             binding.viewRvHomeVertOrder.adapter =
-                HorizontalOrderAdapter(item.orderFoodDetails)// Replace with your inner items list
+                VerticalOrderAdapter(item.orderFoodDetails)// Replace with your inner items list
 //            recyclerView.addItemDecoration(
 //                MenuItemOffsetDecoration(
 //                    context,
@@ -219,13 +220,23 @@ class HomeAdapter(private val items: List<HomeView>) :
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
-            is HomeView.OrderStatusView -> 0
-            is HomeView.BannerView -> 1
-            is HomeView.MenuView -> 2
-            is HomeView.OffersView -> 3
-            is HomeView.FoodCategoryView -> 4
-            is HomeView.HomeHorizontalOrderView -> 5
-            is HomeView.HomeVerticalOrderView -> 6
+            is HomeView.OrderStatusView -> VIEW_TYPE_ORDER_STATUS
+            is HomeView.BannerView -> VIEW_TYPE_BANNER
+            is HomeView.MenuView -> VIEW_TYPE_MENU
+            is HomeView.OffersView -> VIEW_TYPE_OFFERS
+            is HomeView.FoodCategoryView -> VIEW_TYPE_FOOD_CATEGORY
+            is HomeView.HomeHorizontalOrderView -> VIEW_TYPE_HOME_HORIZONTAL_ORDER
+            is HomeView.HomeVerticalOrderView -> VIEW_TYPE_HOME_VERTICAL_ORDER
         }
+    }
+
+    companion object {
+        private const val VIEW_TYPE_ORDER_STATUS = 0
+        private const val VIEW_TYPE_BANNER = 1
+        private const val VIEW_TYPE_MENU = 2
+        private const val VIEW_TYPE_OFFERS = 3
+        private const val VIEW_TYPE_FOOD_CATEGORY = 4
+        private const val VIEW_TYPE_HOME_HORIZONTAL_ORDER = 5
+        private const val VIEW_TYPE_HOME_VERTICAL_ORDER = 6
     }
 }

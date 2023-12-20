@@ -4,26 +4,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.dummyapp.databinding.ItemFoodDetailsBinding
 import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
-class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>):RecyclerView.Adapter<HorizontalOrderAdapter.HorizontalOrderViewHolder>(){
-    class HorizontalOrderViewHolder(val binding:ItemFoodDetailsBinding):RecyclerView.ViewHolder(binding.root) {
+class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>): RecyclerView.Adapter<VerticalOrderAdapter.VerticalOrderViewHolder>(){
+    class VerticalOrderViewHolder(val binding: ItemHomeFoodDetailsVerticalScrollBinding): RecyclerView.ViewHolder(binding.root) {
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalOrderViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalOrderViewHolder {
         val binding =
-            ItemFoodDetailsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemHomeFoodDetailsVerticalScrollBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return HorizontalOrderViewHolder(binding)
+        return VerticalOrderViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return orderlist.size
     }
 
-    override fun onBindViewHolder(holder: HorizontalOrderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VerticalOrderViewHolder, position: Int) {
         with(holder) {
             with(orderlist[position]) {
                 binding.itemFoodDetailsImg.load(this.imgOrder)

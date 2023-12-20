@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     app:strokeColor="@color/nav_color"
+    android:layout_marginHorizontal="20dp"
     android:layout_marginTop="@dimen/dimen_10dp"
     app:strokeWidth="@dimen/dimen_2dp">
 

@@ -122,6 +122,7 @@
     <dimen name="dimen_235dp">235dp</dimen>
     <dimen name="dimen_250dp">250dp</dimen>
     <dimen name="dimen_265dp">265dp</dimen>
+    <dimen name="dimen_297dp">297dp</dimen>
     <dimen name="dimen_160dp">160dp</dimen>
     <dimen name="dimen_150dp">150dp</dimen>
     <dimen name="dimen_170dp">170dp</dimen>
@@ -240,6 +241,7 @@
 
     <dimen name="dimen_125dp">125dp</dimen>
     <dimen name="item_offset">5dp</dimen>
+    <dimen name="dimen_180dp">180dp</dimen>
 
 
 </resources>

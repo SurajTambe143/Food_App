@@ -5,10 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.basket.BasketFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Basket Fragment" />
+    <include layout="@layout/item_no_internet_state"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
