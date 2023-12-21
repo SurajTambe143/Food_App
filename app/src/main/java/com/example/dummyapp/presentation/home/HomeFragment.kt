@@ -80,8 +80,8 @@ class HomeFragment : Fragment() {
                 "3.4 Excellent"
             ),
             OrderFoodDetails(
-                R.drawable.food_items_rectangle_img,
-                "Ultimate Chicken - Wraps, Pl",
+                R.drawable.food_items_rectangle_img_1,
+                "9021PHO Restaurant",
                 "500+",
                 "2.5 KM Away",
                 "25 - 45 Mins",
@@ -89,8 +89,8 @@ class HomeFragment : Fragment() {
                 "3.4 Excellent"
             ),
             OrderFoodDetails(
-                R.drawable.food_items_rectangle_img,
-                "Ultimate Chicken - Wraps, Pl",
+                R.drawable.food_items_rectangle_img_2,
+                "Burgatory Restaurant",
                 "500+",
                 "2.5 KM Away",
                 "25 - 45 Mins",
@@ -98,8 +98,8 @@ class HomeFragment : Fragment() {
                 "3.4 Excellent"
             ),
             OrderFoodDetails(
-                R.drawable.food_items_rectangle_img,
-                "Ultimate Chicken - Wraps, Pl",
+                R.drawable.food_items_rectangle_img_3,
+                "Latitude Cafe",
                 "500+",
                 "2.5 KM Away",
                 "25 - 45 Mins",
@@ -113,11 +113,11 @@ class HomeFragment : Fragment() {
                 hrzOrderList
             ),
             HomeOrderFoodDetails(
-                "Order Again",
+                "Featured",
                 hrzOrderList
             ),
             HomeOrderFoodDetails(
-                "Order Again",
+                "Offers Nearby",
                 hrzOrderList
             )
         )

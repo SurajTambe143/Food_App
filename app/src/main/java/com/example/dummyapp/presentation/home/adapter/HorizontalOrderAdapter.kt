@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemFoodDetailsBinding
-import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
 class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>):RecyclerView.Adapter<HorizontalOrderAdapter.HorizontalOrderViewHolder>(){
@@ -25,6 +25,18 @@ class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>):Recy
 
     override fun onBindViewHolder(holder: HorizontalOrderViewHolder, position: Int) {
         with(holder) {
+            if (position==0){
+                val marginValue = holder.itemView.resources.getDimensionPixelSize(R.dimen.margin_left_value)
+                val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.leftMargin = marginValue
+                binding.root.layoutParams = layoutParams
+            }
+            if (position==itemCount){
+                val marginValue = holder.itemView.resources.getDimensionPixelSize(R.dimen.margin_right_value)
+                val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.rightMargin = marginValue
+                binding.root.layoutParams = layoutParams
+            }
             with(orderlist[position]) {
                 binding.itemFoodDetailsImg.load(this.imgOrder)
                 binding.itemFoodDetailsTxt.text = this.txtTitle

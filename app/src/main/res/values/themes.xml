@@ -4,6 +4,8 @@
          Customize your light theme here.
          <item name="colorPrimary">@color/white</item>
         <item name="colorOnPrimary">@color/nav_color</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="navigationIconTint">@color/black</item>
 
     </style>
     <style name="circle">

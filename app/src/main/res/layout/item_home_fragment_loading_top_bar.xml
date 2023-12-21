@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:paddingTop="@dimen/dimen_12dp"
         android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
         android:paddingBottom="@dimen/dimen_13dp">
 
         <com.google.android.material.imageview.ShapeableImageView

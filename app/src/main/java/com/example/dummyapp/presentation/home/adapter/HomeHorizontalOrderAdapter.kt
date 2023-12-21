@@ -2,9 +2,11 @@ package com.example.dummyapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemFoodDetailsBinding
 import com.example.dummyapp.databinding.ItemHomeHorizontalOrderBinding
 import com.example.dummyapp.domain.model.HomeOrderFoodDetails
@@ -28,6 +30,9 @@ class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDe
     override fun onBindViewHolder(holder: HomeOrderViewHolder, position: Int) {
         with(holder) {
             with(homeOrderList[position]) {
+                if (position==0){
+                    binding.root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                }
                 binding.txtHorizontalOrder.text=this.title
                 binding.rvHomeHrzOrder.let {
                     it.layoutManager =

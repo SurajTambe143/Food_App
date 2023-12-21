@@ -33,6 +33,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 class HomeAdapter(private val items: List<HomeView>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+        private lateinit var homeOffersAdapter: HomeOffersAdapter
+        private lateinit var snapHelper: LinearSnapHelper
+
     //View Holder classes for each type of view
     inner class OrderStatusViewHolder(val binding: ItemOrderStatusBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeView.OrderStatusView) {
@@ -50,16 +53,13 @@ class HomeAdapter(private val items: List<HomeView>) :
     inner class MenuViewHolder(val binding: ItemViewHomeMenuBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
 
-        // Replace with your actual RecyclerView ID
-
         init {
+            binding.rvMenu.layoutManager = GridLayoutManager(context, 4)
         }
 
         fun bind(item: HomeView.MenuView) {
             // Bind data to the inner RecyclerView
-            binding.rvMenu.layoutManager = GridLayoutManager(context, 4)
-            val innerAdapter = MenuAdapter(item.menuList) // Replace with your inner items list
-            binding.rvMenu.adapter = innerAdapter
+            binding.rvMenu.adapter = MenuAdapter(item.menuList)
 //            recyclerView.addItemDecoration(
 //                MenuItemOffsetDecoration(
 //                    context,
@@ -71,11 +71,13 @@ class HomeAdapter(private val items: List<HomeView>) :
 
     inner class OffersViewHolder(val binding: ItemViewOffersBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            homeOffersAdapter = HomeOffersAdapter()
+            binding.offersViewpager.adapter = homeOffersAdapter
+        }
         fun bind(item: HomeView.OffersView) {
-            //Bind data to views
-            val adapter = HomeOffersAdapter()
-            adapter.setItem(item.offersList)
-            binding.offersViewpager.adapter = adapter
+
+            homeOffersAdapter.setItem(item.offersList)
 
             // Attach TabLayout to ViewPager2
             TabLayoutMediator(binding.tabLayout, binding.offersViewpager) { tab, position ->
@@ -89,27 +91,20 @@ class HomeAdapter(private val items: List<HomeView>) :
     inner class FoodCategoryViewHolder(val binding:ItemViewFoodCategoryBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-
-        }
-
-        fun bind(item: HomeView.FoodCategoryView) {
-            // Bind data to the inner RecyclerView
             binding.rvFoodCategory.layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL, false
             )
-            val snapHelper = LinearSnapHelper() // Or PagerSnapHelper
+            snapHelper = LinearSnapHelper()
+        }
+
+        fun bind(item: HomeView.FoodCategoryView) {
+            // Or PagerSnapHelper
             snapHelper.attachToRecyclerView(binding.rvFoodCategory)
 
             val innerAdapter =
-                FoodCategoryAdapter(item.foodCategoryList) // Replace with your inner items list
+                FoodCategoryAdapter(item.foodCategoryList)
             binding.rvFoodCategory.adapter = innerAdapter
-//            recyclerView.addItemDecoration(
-//                MenuItemOffsetDecoration(
-//                    context,
-//                    R.dimen.item_offset
-//                )
-//
 
         }
     }
@@ -117,48 +112,30 @@ class HomeAdapter(private val items: List<HomeView>) :
     inner class HomeHorizontalOrderViewHolder(val binding:ItemViewHomeHorizontalOrderBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-
+            binding.viewRvHomeHrzOrder.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         fun bind(item: HomeView.HomeHorizontalOrderView) {
             // Bind data to the inner RecyclerView
-            binding.viewRvHomeHrzOrder.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             binding.viewRvHomeHrzOrder.adapter =
-                HomeHorizontalOrderAdapter(item.homeOrderFoodDetails)// Replace with your inner items list
-//            recyclerView.addItemDecoration(
-//                MenuItemOffsetDecoration(
-//                    context,
-//                    R.dimen.item_offset
-//                )
-//
-//            val snapHelper = LinearSnapHelper() // Or PagerSnapHelper
-//            snapHelper.attachToRecyclerView(recyclerView)
+                HomeHorizontalOrderAdapter(item.homeOrderFoodDetails)
         }
     }
 
     inner class HomeVerticalOrderViewHolder(val binding:ItemViewHomeVerticalOrderBinding, val context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-
+            binding.viewRvHomeVertOrder.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
         fun bind(item: HomeView.HomeVerticalOrderView) {
             // Bind data to the inner RecyclerView
-            binding.viewRvHomeVertOrder.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
             binding.viewRvHomeVertOrder.adapter =
-                VerticalOrderAdapter(item.orderFoodDetails)// Replace with your inner items list
-//            recyclerView.addItemDecoration(
-//                MenuItemOffsetDecoration(
-//                    context,
-//                    R.dimen.item_offset
-//                )
-//
-//            val snapHelper = LinearSnapHelper() // Or PagerSnapHelper
-//            snapHelper.attachToRecyclerView(recyclerView)
+                VerticalOrderAdapter(item.orderFoodDetails)
         }
     }
 

@@ -9,6 +9,7 @@
     <string name="active_order">Active order</string>
     <string name="order_number">Order Number - 5th Avenue - AI Furjan Area</string>
     <string name="txt_menu">Food</string>
+    <string name="txt_food_category">Food</string>
     <string name="item_food_details_txt">Ultimate Chicken - Wraps, Pl</string>
     <string name="offers">Get $0 delivery fee on your first order over $10!</string>
     <string name="item_food_details_likes_txt">500+</string>
@@ -22,6 +23,6 @@
     <string name="txt_hrz_see_more">See More</string>
     <string name="txt_error_msg">Oops!! Something went wrong</string>
     <string name="txt_retry">Try again</string>
-    <string name="txt_loding_msg">Try searching with food emojis today</string>
+    <string name="txt_loading_msg">Try searching with food emojis today</string>
     <string name="txt_no_network_msg">Could not connect to the internet. Please check your network</string>
 </resources>

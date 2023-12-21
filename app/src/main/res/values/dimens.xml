@@ -242,6 +242,9 @@
     <dimen name="dimen_125dp">125dp</dimen>
     <dimen name="item_offset">5dp</dimen>
     <dimen name="dimen_180dp">180dp</dimen>
+    <dimen name="margin_left_value">20dp</dimen>
+    <dimen name="margin_right_value">20dp</dimen>
+    <dimen name="margin_value">20dp</dimen>
 
 
 </resources>
