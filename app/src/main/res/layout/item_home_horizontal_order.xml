@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="@dimen/dimen_20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -22,10 +21,10 @@
         android:id="@+id/txt_show_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_horizontal_order"
+        app:layout_constraintBottom_toBottomOf="@id/txt_horizontal_order"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="@dimen/dimen_20dp"
-        android:layout_marginTop="@dimen/dimen_30dp"
         android:text="@string/txt_hrz_see_more"
         android:textColor="@color/app_color"
         android:textSize="@dimen/dimen_14sp"
