@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     app:strokeColor="@color/card_bg"
     app:cardCornerRadius="@dimen/dimen_15dp"
-    android:layout_marginTop="@dimen/margin_value"
+    android:layout_marginVertical="@dimen/margin_value_min"
     android:layout_marginHorizontal="@dimen/margin_value"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
