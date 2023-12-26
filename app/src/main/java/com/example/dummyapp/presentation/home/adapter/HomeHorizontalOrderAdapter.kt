@@ -11,7 +11,7 @@ import com.example.dummyapp.databinding.ItemFoodDetailsBinding
 import com.example.dummyapp.databinding.ItemHomeHorizontalOrderBinding
 import com.example.dummyapp.domain.model.HomeOrderFoodDetails
 
-class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDetails>) :
+class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDetails>,private val onClick:()->Unit) :
     RecyclerView.Adapter<HomeHorizontalOrderAdapter.HomeOrderViewHolder>() {
     class HomeOrderViewHolder(val binding:ItemHomeHorizontalOrderBinding):RecyclerView.ViewHolder(binding.root) {
     }
@@ -37,7 +37,9 @@ class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDe
                 binding.rvHomeHrzOrder.let {
                     it.layoutManager =
                         LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
-                    it.adapter=HorizontalOrderAdapter(this.rvList)
+                    it.adapter=HorizontalOrderAdapter(this.rvList){
+                        onClick.invoke()
+                    }
                 }
             }
         }

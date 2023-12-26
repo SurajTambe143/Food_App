@@ -30,7 +30,7 @@ import com.example.dummyapp.presentation.home.model.HomeView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeAdapter(private val items: List<HomeView>) :
+class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private lateinit var homeOffersAdapter: HomeOffersAdapter
@@ -120,7 +120,9 @@ class HomeAdapter(private val items: List<HomeView>) :
             // Bind data to the inner RecyclerView
 
             binding.viewRvHomeHrzOrder.adapter =
-                HomeHorizontalOrderAdapter(item.homeOrderFoodDetails)
+                HomeHorizontalOrderAdapter(item.homeOrderFoodDetails){
+                    onClicked.invoke()
+                }
         }
     }
 
@@ -135,7 +137,9 @@ class HomeAdapter(private val items: List<HomeView>) :
             // Bind data to the inner RecyclerView
 
             binding.viewRvHomeVertOrder.adapter =
-                VerticalOrderAdapter(item.orderFoodDetails)
+                VerticalOrderAdapter(item.orderFoodDetails){
+                    onClicked.invoke()
+                }
         }
     }
 

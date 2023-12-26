@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.FragmentHomeBinding
@@ -57,7 +59,9 @@ class HomeFragment : Fragment() {
         )
         binding.rvHome.layoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        homeAdapter = HomeAdapter(homeViewList)
+        homeAdapter = HomeAdapter(homeViewList){
+            findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+        }
         binding.rvHome.adapter = homeAdapter
     }
 

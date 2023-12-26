@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimen_10sp"
             android:text="@string/order_number"
-            android:layout_marginTop="@dimen/margin_value_min_5dp"
             android:layout_marginBottom="@dimen/margin_value_min"
             android:layout_marginStart="@dimen/dimen_30dp"
             android:fontFamily="@font/cairo_regular"

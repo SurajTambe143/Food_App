@@ -7,7 +7,7 @@ import coil.load
 import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
-class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>): RecyclerView.Adapter<VerticalOrderAdapter.VerticalOrderViewHolder>(){
+class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>, private val onClick:()->Unit): RecyclerView.Adapter<VerticalOrderAdapter.VerticalOrderViewHolder>(){
     class VerticalOrderViewHolder(val binding: ItemHomeFoodDetailsVerticalScrollBinding): RecyclerView.ViewHolder(binding.root) {
     }
 
@@ -32,6 +32,9 @@ class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>): Recyc
                 binding.chip3Time.text=this.txtTime
                 binding.chip4Iqd.text=this.txtIQD
                 binding.chip5Ratings.text=this.txtRating
+                binding.root.setOnClickListener {
+                    onClick.invoke()
+                }
             }
         }
     }

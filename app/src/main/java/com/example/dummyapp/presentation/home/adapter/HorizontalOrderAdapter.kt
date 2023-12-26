@@ -8,7 +8,7 @@ import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemFoodDetailsBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
-class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>):RecyclerView.Adapter<HorizontalOrderAdapter.HorizontalOrderViewHolder>(){
+class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>,private val onClick:()->Unit):RecyclerView.Adapter<HorizontalOrderAdapter.HorizontalOrderViewHolder>(){
     class HorizontalOrderViewHolder(val binding:ItemFoodDetailsBinding):RecyclerView.ViewHolder(binding.root) {
     }
 
@@ -45,6 +45,7 @@ class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>):Recy
                 binding.chip3Time.text=this.txtTime
                 binding.chip4Iqd.text=this.txtIQD
                 binding.chip5Ratings.text=this.txtRating
+                binding.root.setOnClickListener { onClick.invoke() }
             }
         }
     }

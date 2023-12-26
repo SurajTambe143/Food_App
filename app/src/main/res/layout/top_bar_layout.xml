@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/top_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/dimen_20dp"
-    android:paddingTop="@dimen/dimen_12dp"
     android:background="@color/white"
     android:paddingBottom="@dimen/dimen_10dp">
 
@@ -15,6 +13,7 @@
         android:layout_width="@dimen/dimen_41dp"
         android:layout_height="@dimen/dimen_41dp"
         android:src="@drawable/ic_scooter"
+        android:layout_marginTop="@dimen/dimen_12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/circle" />
@@ -26,6 +25,7 @@
         android:layout_marginStart="@dimen/dimen_10dp"
         android:text="Alsaree3 App"
         android:textSize="@dimen/dimen_16sp"
+        android:layout_marginTop="@dimen/dimen_5dp"
         android:fontFamily="@font/cairo_regular"
         android:lineSpacingMultiplier="0.7"
         app:layout_constraintStart_toEndOf="@id/image"
