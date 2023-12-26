@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/card_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txt_gold_category_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_regular"
+        android:text="@string/txt_gold_category_card"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="start"
+        android:textSize="@dimen/dimen_16sp"
+        android:textStyle="bold"
+        android:paddingStart="@dimen/dimen_10dp"
+        android:layout_marginEnd="@dimen/margin_value_min"
+        android:layout_marginTop="@dimen/margin_value"
+        android:layout_marginStart="@dimen/margin_value_min"/>
+
+    <TextView
+        android:id="@+id/txt_gold_category_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_gold_category_details"
+        app:layout_constraintTop_toBottomOf="@id/txt_gold_category_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_gold_category"
+        android:layout_marginTop="@dimen/margin_value_min"
+        android:fontFamily="@font/cairo_regular"
+        android:lineSpacingMultiplier="0.7"
+        android:textSize="@dimen/dimen_12sp"
+        android:paddingEnd="@dimen/dimen_50dp"
+        android:paddingStart="@dimen/dimen_10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/margin_value_min"
+        android:layout_marginStart="@dimen/margin_value_min"/>
+
+    <SeekBar
+        android:id="@+id/seekbar_gold_category"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txt_gold_category_details"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/seekbar_progress_indicator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_value"
+        android:layout_marginBottom="@dimen/margin_value"
+        android:progressDrawable="@drawable/custom_seekbar"
+        android:thumb="@drawable/custom_seekbar_divider"
+        android:max="50"
+        android:progress="40"/>
+
+    <TextView
+        android:id="@+id/seekbar_progress_indicator"
+        android:layout_width="@dimen/dimen_30dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:textSize="@dimen/dimen_10sp"
+        android:background="@drawable/background_card"
+        android:gravity="center"
+        android:fontFamily="@font/cairo_regular"
+        android:text="20%"
+        android:layout_marginEnd="@dimen/margin_value"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/seekbar_gold_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/seekbar_gold_category"
+        app:layout_constraintBottom_toBottomOf="@id/seekbar_gold_category"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

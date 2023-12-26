@@ -246,6 +246,9 @@
     <dimen name="margin_right_value">20dp</dimen>
     <dimen name="margin_value">20dp</dimen>
     <dimen name="margin_value_min">10dp</dimen>
+    <dimen name="margin_value_min_5dp">5dp</dimen>
+    <dimen name="margin_value_min_3dp">3dp</dimen>
+    <dimen name="margin_value_min_2dp">2dp</dimen>
 
 
 

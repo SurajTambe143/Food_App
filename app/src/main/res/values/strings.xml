@@ -25,4 +25,6 @@
     <string name="txt_retry">Try again</string>
     <string name="txt_loading_msg">Try searching with food emojis today</string>
     <string name="txt_no_network_msg">Could not connect to the internet. Please check your network</string>
+    <string name="txt_gold_category_card">Your Gold Category Card</string>
+    <string name="txt_gold_category_details">You\'ve placed three orders with us. Order more to obtain our Gold Category Card</string>
 </resources>
