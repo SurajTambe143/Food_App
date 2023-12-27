@@ -2,6 +2,7 @@ package com.example.dummyapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.dummyapp.R
@@ -46,6 +47,9 @@ class HorizontalOrderAdapter(private val orderlist: List<OrderFoodDetails>,priva
                 binding.chip4Iqd.text=this.txtIQD
                 binding.chip5Ratings.text=this.txtRating
                 binding.root.setOnClickListener { onClick.invoke() }
+                binding.cvHorizontalScroll.startAnimation(
+                    AnimationUtils.loadAnimation(holder.itemView.context,
+                    R.anim.home_rv_horizontal_anim))
             }
         }
     }

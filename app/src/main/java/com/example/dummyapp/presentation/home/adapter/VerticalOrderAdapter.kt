@@ -2,8 +2,10 @@ package com.example.dummyapp.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
@@ -35,6 +37,8 @@ class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>, privat
                 binding.root.setOnClickListener {
                     onClick.invoke()
                 }
+                binding.cvVerticalScroll.startAnimation(AnimationUtils.loadAnimation(holder.itemView.context,
+                    R.anim.home_rv_vertical_anim))
             }
         }
     }

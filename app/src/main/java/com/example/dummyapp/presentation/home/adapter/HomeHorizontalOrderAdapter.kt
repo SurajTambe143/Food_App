@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.dummyapp.R
@@ -13,6 +14,7 @@ import com.example.dummyapp.domain.model.HomeOrderFoodDetails
 
 class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDetails>,private val onClick:()->Unit) :
     RecyclerView.Adapter<HomeHorizontalOrderAdapter.HomeOrderViewHolder>() {
+    private lateinit var snapHelper: LinearSnapHelper
     class HomeOrderViewHolder(val binding:ItemHomeHorizontalOrderBinding):RecyclerView.ViewHolder(binding.root) {
     }
 
@@ -28,6 +30,7 @@ class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDe
     }
 
     override fun onBindViewHolder(holder: HomeOrderViewHolder, position: Int) {
+        snapHelper = LinearSnapHelper()
         with(holder) {
             with(homeOrderList[position]) {
                 if (position==0){
@@ -42,6 +45,7 @@ class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDe
                     }
                 }
             }
+            snapHelper.attachToRecyclerView(binding.rvHomeHrzOrder)
         }
     }
 }
