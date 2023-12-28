@@ -23,5 +23,20 @@
         <item name="cornerSizeBottomRight">@dimen/dimen_100dp</item>
     </style>
 
+    <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
+    </style>
+
+    <style name="ShapeAppearance_custom_corners" parent="">
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeBottomLeft">@dimen/dimen_0dp</item>
+        <item name="cornerSizeTopLeft">@dimen/dimen_0dp</item>
+        <item name="cornerSizeTopRight">@dimen/dimen_5dp</item>
+        <item name="cornerSizeBottomRight">@dimen/dimen_5dp</item>
+    </style>
+
     <style name="Theme.DummyApp" parent="Base.Theme.DummyApp" />
 </resources>

@@ -36,4 +36,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sticky_header"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:background="@color/card_bg"
+        tools:listitem="@layout/item_home_sticky_rv"
+        tools:itemCount="1"
+        android:paddingHorizontal="@dimen/margin_value_min"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_appbar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
