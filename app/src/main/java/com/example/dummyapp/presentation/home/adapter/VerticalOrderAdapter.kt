@@ -37,7 +37,7 @@ class VerticalOrderAdapter(private val orderlist: List<OrderFoodDetails>, privat
                 binding.root.setOnClickListener {
                     onClick.invoke()
                 }
-                binding.cvVerticalScroll.startAnimation(AnimationUtils.loadAnimation(holder.itemView.context,
+                binding.root.startAnimation(AnimationUtils.loadAnimation(holder.itemView.context,
                     R.anim.home_rv_vertical_anim))
             }
         }
