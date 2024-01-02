@@ -7,7 +7,7 @@ import com.example.dummyapp.domain.model.OffersItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 
 sealed class HomeView {
-    data class OrderStatusView(val orderNumber:String) : HomeView()
+    data class OrderStatusView(val orderNumber:String?) : HomeView()
     data class BannerView(val imgBanner:Int) : HomeView()
     data class MenuView(val menuList: List<MenuItem>) : HomeView()
     data class OffersView(val offersList: List<OffersItem>): HomeView()

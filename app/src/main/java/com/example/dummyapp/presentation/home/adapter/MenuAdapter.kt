@@ -9,8 +9,10 @@ import coil.load
 import com.example.dummyapp.databinding.ItemHomeMenuBinding
 import com.example.dummyapp.domain.model.MenuItem
 
-class MenuAdapter(private val menuList: List<MenuItem>) :
+class MenuAdapter() :
     RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+
+    private var menuList: List<MenuItem> = emptyList<MenuItem>().toMutableList()
 
     class MenuViewHolder(val binding: ItemHomeMenuBinding) : ViewHolder(binding.root) {
     }
@@ -33,6 +35,11 @@ class MenuAdapter(private val menuList: List<MenuItem>) :
                 binding.txtMenu.text = this.txt
             }
         }
+    }
+
+    fun updateList(list: List<MenuItem>) {
+        menuList = list
+        notifyDataSetChanged()
     }
 
 }
