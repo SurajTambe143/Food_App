@@ -11,16 +11,29 @@ import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemFoodDetailsBinding
 import com.example.dummyapp.databinding.ItemHomeHorizontalOrderBinding
 import com.example.dummyapp.domain.model.HomeOrderFoodDetails
+import com.example.dummyapp.domain.model.MenuItem
 
-class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDetails>,private val onClick:()->Unit) :
+class HomeHorizontalOrderAdapter(private val onClick: () -> Unit) :
     RecyclerView.Adapter<HomeHorizontalOrderAdapter.HomeOrderViewHolder>() {
+
+    private var homeOrderList: List<HomeOrderFoodDetails> =
+        emptyList<HomeOrderFoodDetails>().toMutableList()
+    private var horizontalOrderAdapter: HorizontalOrderAdapter =
+        HorizontalOrderAdapter { onClick.invoke() }
+
     private lateinit var snapHelper: LinearSnapHelper
-    class HomeOrderViewHolder(val binding:ItemHomeHorizontalOrderBinding):RecyclerView.ViewHolder(binding.root) {
+
+    class HomeOrderViewHolder(val binding: ItemHomeHorizontalOrderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeOrderViewHolder {
         val binding =
-            ItemHomeHorizontalOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemHomeHorizontalOrderBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
 
         return HomeOrderViewHolder(binding)
     }
@@ -29,23 +42,38 @@ class HomeHorizontalOrderAdapter(private val homeOrderList: List<HomeOrderFoodDe
         return homeOrderList.size
     }
 
+
     override fun onBindViewHolder(holder: HomeOrderViewHolder, position: Int) {
         snapHelper = LinearSnapHelper()
         with(holder) {
             with(homeOrderList[position]) {
-                if (position==0){
-                    binding.root.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+                if (position == 0) {
+                    binding.root.setBackgroundColor(
+                        ContextCompat.getColor(
+                            holder.itemView.context,
+                            R.color.white
+                        )
+                    )
                 }
-                binding.txtHorizontalOrder.text=this.title
+                binding.txtHorizontalOrder.text = this.title
                 binding.rvHomeHrzOrder.let {
                     it.layoutManager =
-                        LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
-                    it.adapter=HorizontalOrderAdapter(this.rvList){
-                        onClick.invoke()
-                    }
+                        LinearLayoutManager(
+                            holder.itemView.context,
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                    it.adapter = horizontalOrderAdapter
+                    horizontalOrderAdapter.updateList(this.rvList)
                 }
             }
             snapHelper.attachToRecyclerView(binding.rvHomeHrzOrder)
         }
     }
+
+    fun updateList(list: List<HomeOrderFoodDetails>) {
+        homeOrderList = list
+        notifyDataSetChanged()
+    }
+
 }

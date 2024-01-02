@@ -28,7 +28,7 @@ class HomeOffersAdapter : RecyclerView.Adapter<HomeOffersAdapter.HomeOffersViewH
         }
     }
 
-    fun setItem(list: List<OffersItem>) {
+    fun updateList(list: List<OffersItem>) {
         this.items = list
         notifyDataSetChanged()
     }
