@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    app:strokeColor="@color/nav_color"
+    android:layout_marginHorizontal="@dimen/margin_value"
+    android:layout_marginTop="@dimen/dimen_10dp"
+    app:strokeWidth="@dimen/dimen_2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txt_active_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_12sp"
+            android:text="@string/active_order"
+            android:textStyle="bold"
+            android:fontFamily="@font/cairo_regular"
+            android:lineSpacingMultiplier="0.7"
+            android:layout_marginTop="@dimen/margin_value_min"
+            android:layout_marginStart="@dimen/dimen_30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_order_number"
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_10sp"
+            android:text="@string/order_number"
+            android:layout_marginBottom="@dimen/margin_value_min"
+            android:layout_marginStart="@dimen/dimen_30dp"
+            android:fontFamily="@font/cairo_regular"
+            android:lineSpacingMultiplier="0.7"
+            app:layout_constraintTop_toBottomOf="@id/txt_active_order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/order_progress_track"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/order_progress_track"
+            android:layout_width="@dimen/dimen_41dp"
+            android:layout_height="@dimen/dimen_41dp"
+            android:indeterminate="false"
+            android:progress="30"
+            app:indicatorColor="@color/nav_color"
+            app:trackColor="@color/card_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/order_more"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/order_img"
+            android:layout_width="@dimen/dimen_15dp"
+            android:layout_height="@dimen/dimen_21dp"
+            android:src="@drawable/order_bucket"
+            app:layout_constraintTop_toTopOf="@id/order_progress_track"
+            app:layout_constraintBottom_toBottomOf="@id/order_progress_track"
+            app:layout_constraintStart_toStartOf="@id/order_progress_track"
+            app:layout_constraintEnd_toEndOf="@id/order_progress_track"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/order_more"
+            android:layout_width="@dimen/dimen_18dp"
+            android:layout_height="@dimen/dimen_18dp"
+            android:src="@drawable/ic_right_arrow"
+            android:layout_marginEnd="@dimen/dimen_30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

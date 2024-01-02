@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemHomeFoodCategoryBinding
 import com.example.dummyapp.domain.model.FoodCategory
 
@@ -20,6 +21,12 @@ class FoodCategoryAdapter(private val menuList: List<FoodCategory>): RecyclerVie
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         with(holder) {
+            if (position==0){
+                val marginValue = holder.itemView.resources.getDimensionPixelSize(R.dimen.margin_left_value)
+                val layoutParams = binding.root.layoutParams as ViewGroup.MarginLayoutParams
+                layoutParams.leftMargin = marginValue
+                binding.root.layoutParams = layoutParams
+            }
             with(menuList[position]) {
                 binding.imgCategory.load(this.imgFood)
                 binding.txtFood.text = this.txtFood

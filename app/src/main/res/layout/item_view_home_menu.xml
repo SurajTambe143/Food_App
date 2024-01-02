@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rv_menu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:listitem="@layout/item_home_menu"
+    tools:itemCount="1"
+    android:padding="@dimen/item_offset"
+    android:layout_marginStart="@dimen/dimen_5dp"
+    android:layout_marginEnd="@dimen/dimen_5dp" xmlns:tools="http://schemas.android.com/tools">
+
+</androidx.recyclerview.widget.RecyclerView>

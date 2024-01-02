@@ -3,12 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.profile.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_loading_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile fragment" />
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:orientation="vertical"
+        shimmer:duration="1000"
+        android:background="@color/white"
+        shimmer:layout_constraintTop_toTopOf="parent"
+        shimmer:layout_constraintStart_toStartOf="parent">
+
+        <include layout="@layout/item_home_fragment_loading_top_bar" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:id="@+id/loading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_0dp"
+        shimmer:layout_constraintStart_toStartOf="parent"
+        shimmer:layout_constraintTop_toBottomOf="@id/shimmer_loading_container"
+        shimmer:layout_constraintEnd_toEndOf="parent"
+        shimmer:layout_constraintBottom_toBottomOf="parent"
+        layout="@layout/item_home_fragment_loding"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

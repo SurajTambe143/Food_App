@@ -2,6 +2,7 @@ package com.example.dummyapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,5 +25,10 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
         navView.setupWithNavController(navController)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ActivityNavigator.applyPopAnimationsToPendingTransition(this)
     }
 }
