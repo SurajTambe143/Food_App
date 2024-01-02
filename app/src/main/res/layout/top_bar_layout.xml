@@ -53,4 +53,31 @@
         app:layout_constraintStart_toEndOf="@id/name_header_area"
         app:layout_constraintTop_toBottomOf="@id/name_header" />
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/order_progress_track"
+        android:layout_width="@dimen/dimen_41dp"
+        android:layout_height="@dimen/dimen_41dp"
+        android:indeterminate="false"
+        android:progress="20"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/margin_value_min"
+        app:indicatorColor="@color/nav_color"
+        app:trackColor="@color/card_bg"
+        app:indicatorDirectionCircular="clockwise"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/order_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20%"
+        android:textSize="@dimen/dimen_10sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/order_progress_track"
+        app:layout_constraintBottom_toBottomOf="@id/order_progress_track"
+        app:layout_constraintStart_toStartOf="@id/order_progress_track"
+        app:layout_constraintEnd_toEndOf="@id/order_progress_track"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

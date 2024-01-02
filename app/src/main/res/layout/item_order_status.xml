@@ -49,6 +49,7 @@
             android:indeterminate="false"
             android:progress="30"
             app:indicatorColor="@color/nav_color"
+            app:trackColor="@color/card_bg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/order_more"/>

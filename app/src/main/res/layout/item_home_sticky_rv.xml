@@ -22,6 +22,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:textAlignment="center"
+            android:lines="2"
             android:fontFamily="@font/cairo_regular"
             android:lineSpacingMultiplier="0.7"
             android:paddingHorizontal="@dimen/margin_value_min_5dp"
