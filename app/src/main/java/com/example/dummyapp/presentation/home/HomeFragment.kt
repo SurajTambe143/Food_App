@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,20 +27,23 @@ import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.log
 
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var menuList: List<MenuItem>
-    private lateinit var stickyList: List<StickyItem>
-    private lateinit var foodCategoryList: List<FoodCategory>
-    private lateinit var homeViewList: List<HomeView>
+    private var menuList: List<MenuItem> = emptyList()
+    private var stickyList: List<StickyItem> = emptyList()
+    private var foodCategoryList: List<FoodCategory> = emptyList()
+    private var homeViewList: List<HomeView> = emptyList()
+    private var images: List<OffersItem> = emptyList()
+    private var hrzOrderList: List<OrderFoodDetails> = emptyList()
+    private var homeHrzOrderList: List<HomeOrderFoodDetails> = emptyList()
     private lateinit var homeAdapter: HomeAdapter
-    private lateinit var images: List<OffersItem>
-    private lateinit var hrzOrderList: List<OrderFoodDetails>
-    private lateinit var homeHrzOrderList: List<HomeOrderFoodDetails>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,11 +56,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch(Dispatchers.IO) {
+            setUpLists()
+        }
         setUpUI()
     }
 
-
-    private fun setUpUI() {
+    private suspend fun setUpLists() {
         loadLists()
         homeViewList = listOf(
             HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
@@ -67,6 +73,10 @@ class HomeFragment : Fragment() {
             HomeView.HomeHorizontalOrderView(homeHrzOrderList),
             HomeView.HomeVerticalOrderView(hrzOrderList)
         )
+    }
+
+
+    private fun setUpUI() {
         binding.stickyHeader.let {
             it.layoutManager = GridLayoutManager(requireActivity(), 4)
             it.adapter = StickyViewAdapter(stickyList)
@@ -90,7 +100,7 @@ class HomeFragment : Fragment() {
     internal class RvStickyScroll(
         val list: List<HomeView>,
         private val stickyView: RecyclerView,
-        val rvLayoutManager: LinearLayoutManager
+        private val rvLayoutManager: LinearLayoutManager
     ) : RecyclerView.OnScrollListener() {
         private val TAG = "HomeFragment"
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -116,7 +126,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun loadLists() {
+    private suspend fun loadLists() {
         loadMenu()
         loadSticky()
         loadCategory()
@@ -124,7 +134,7 @@ class HomeFragment : Fragment() {
         loadHorizontalOrder()
     }
 
-    private fun loadHorizontalOrder() {
+    private suspend fun loadHorizontalOrder() {
         hrzOrderList = listOf(
             OrderFoodDetails(
                 R.drawable.food_items_rectangle_img,
@@ -177,9 +187,10 @@ class HomeFragment : Fragment() {
                 hrzOrderList
             )
         )
+//        delay(500)
     }
 
-    private fun loadOffers() {
+    private suspend fun loadOffers() {
         images = listOf(
             OffersItem(R.drawable.bg_offers),
             OffersItem(R.drawable.bg_offers),
@@ -187,27 +198,30 @@ class HomeFragment : Fragment() {
             OffersItem(R.drawable.bg_offers),
             OffersItem(R.drawable.bg_offers)
         )
+//        delay(200)
     }
 
-    private fun loadMenu() {
+    private suspend fun loadMenu() {
         menuList = listOf(
             MenuItem(R.drawable.ic_meal, "Food"),
             MenuItem(R.drawable.ic_hamper, "Alsaree3 Market"),
             MenuItem(R.drawable.ic_supplier, "Parcel"),
             MenuItem(R.drawable.ic_ingredients, "More"),
         )
+//        delay(100)
     }
 
-    private fun loadSticky() {
+    private suspend fun loadSticky() {
         stickyList = listOf(
             StickyItem("Food"),
             StickyItem("Alsaree3 Market"),
             StickyItem("Parcel"),
             StickyItem("More"),
         )
+//        delay(100)
     }
 
-    private fun loadCategory() {
+    private suspend fun loadCategory() {
         foodCategoryList = listOf(
             FoodCategory(R.drawable.food_breakfast, "Breakfast"),
             FoodCategory(R.drawable.food_sweets, "Sweets"),
@@ -218,6 +232,7 @@ class HomeFragment : Fragment() {
             FoodCategory(R.drawable.food_fishes, "Fishes"),
             FoodCategory(R.drawable.food_eastern, "Eastern"),
         )
+//        delay(500)
     }
 
     override fun onDestroyView() {

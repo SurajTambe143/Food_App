@@ -2,18 +2,13 @@ package com.example.dummyapp.presentation.home
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import coil.load
-import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemBannerBinding
-import com.example.dummyapp.databinding.ItemOffersBinding
 import com.example.dummyapp.databinding.ItemOrderStatusBinding
 import com.example.dummyapp.databinding.ItemViewFoodCategoryBinding
 import com.example.dummyapp.databinding.ItemViewHomeHorizontalOrderBinding
@@ -23,29 +18,37 @@ import com.example.dummyapp.databinding.ItemViewOffersBinding
 import com.example.dummyapp.presentation.home.adapter.FoodCategoryAdapter
 import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.HomeOffersAdapter
-import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.MenuAdapter
-import com.example.dummyapp.presentation.home.adapter.MenuItemOffsetDecoration
 import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->Unit) :
+class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        private lateinit var homeOffersAdapter: HomeOffersAdapter
-        private lateinit var snapHelper: LinearSnapHelper
+    private var homeOffersAdapter: HomeOffersAdapter ?=null
+    private var menuAdapter: MenuAdapter?=null
+    private var foodCategoryAdapter: FoodCategoryAdapter ?=null
+    private var homeHorizontalOrderAdapter: HomeHorizontalOrderAdapter =
+        HomeHorizontalOrderAdapter {
+            onClicked.invoke()
+        }
+    private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
+        onClicked.invoke()
+    }
+    private lateinit var snapHelper: LinearSnapHelper
 
     //View Holder classes for each type of view
-    inner class OrderStatusViewHolder(val binding: ItemOrderStatusBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class OrderStatusViewHolder(val binding: ItemOrderStatusBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeView.OrderStatusView) {
             //Bind data to views
-            binding.txtOrderNumber.text=item.orderNumber
+            binding.txtOrderNumber.text = item.orderNumber
         }
     }
 
-    inner class BannerViewHolder(val binding: ItemBannerBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class BannerViewHolder(val binding: ItemBannerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeView.BannerView) {
             binding.imgBanner.load(item.imgBanner)
         }
@@ -55,30 +58,34 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->U
         RecyclerView.ViewHolder(binding.root) {
 
         init {
+            menuAdapter = MenuAdapter()
+            binding.rvMenu.adapter = menuAdapter
             binding.rvMenu.layoutManager = GridLayoutManager(context, 4)
         }
 
         fun bind(item: HomeView.MenuView) {
             // Bind data to the inner RecyclerView
-            binding.rvMenu.adapter = MenuAdapter(item.menuList)
 //            recyclerView.addItemDecoration(
 //                MenuItemOffsetDecoration(
 //                    context,
 //                    R.dimen.item_offset
 //                )
 //            )
+            menuAdapter?.updateList(item.menuList)
         }
     }
 
-    inner class OffersViewHolder(val binding: ItemViewOffersBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class OffersViewHolder(val binding: ItemViewOffersBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             homeOffersAdapter = HomeOffersAdapter()
             binding.offersViewpager.adapter = homeOffersAdapter
         }
+
         fun bind(item: HomeView.OffersView) {
 
-            homeOffersAdapter.setItem(item.offersList)
+            homeOffersAdapter?.updateList(item.offersList)
 
             // Attach TabLayout to ViewPager2
             TabLayoutMediator(binding.tabLayout, binding.offersViewpager) { tab, position ->
@@ -89,13 +96,18 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->U
         }
     }
 
-    inner class FoodCategoryViewHolder(val binding:ItemViewFoodCategoryBinding, val context: Context) :
+    inner class FoodCategoryViewHolder(
+        val binding: ItemViewFoodCategoryBinding,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.rvFoodCategory.layoutManager = LinearLayoutManager(
                 context,
                 LinearLayoutManager.HORIZONTAL, false
             )
+            foodCategoryAdapter = FoodCategoryAdapter()
+            binding.rvFoodCategory.adapter = foodCategoryAdapter
             snapHelper = LinearSnapHelper()
         }
 
@@ -103,44 +115,43 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->U
             // Or PagerSnapHelper
             snapHelper.attachToRecyclerView(binding.rvFoodCategory)
 
-            val innerAdapter =
-                FoodCategoryAdapter(item.foodCategoryList)
-            binding.rvFoodCategory.adapter = innerAdapter
-
+            foodCategoryAdapter?.updateList(item.foodCategoryList)
         }
     }
 
-    inner class HomeHorizontalOrderViewHolder(val binding:ItemViewHomeHorizontalOrderBinding, val context: Context) :
+    inner class HomeHorizontalOrderViewHolder(
+        val binding: ItemViewHomeHorizontalOrderBinding,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewRvHomeHrzOrder.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            binding.viewRvHomeHrzOrder.adapter = homeHorizontalOrderAdapter
         }
 
         fun bind(item: HomeView.HomeHorizontalOrderView) {
             // Bind data to the inner RecyclerView
 
-            binding.viewRvHomeHrzOrder.adapter =
-                HomeHorizontalOrderAdapter(item.homeOrderFoodDetails){
-                    onClicked.invoke()
-                }
+            homeHorizontalOrderAdapter.updateList(item.homeOrderFoodDetails)
         }
     }
 
-    inner class HomeVerticalOrderViewHolder(val binding:ItemViewHomeVerticalOrderBinding, val context: Context) :
+    inner class HomeVerticalOrderViewHolder(
+        val binding: ItemViewHomeVerticalOrderBinding,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewRvHomeVertOrder.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            binding.viewRvHomeVertOrder.adapter = verticalOrderAdapter
         }
 
         fun bind(item: HomeView.HomeVerticalOrderView) {
             // Bind data to the inner RecyclerView
 
-            binding.viewRvHomeVertOrder.adapter =
-                VerticalOrderAdapter(item.orderFoodDetails){
-                    onClicked.invoke()
-                }
+            verticalOrderAdapter.updateList(item.orderFoodDetails)
         }
     }
 
@@ -166,17 +177,29 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->U
             )
 
             4 -> FoodCategoryViewHolder(
-                ItemViewFoodCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                ItemViewFoodCategoryBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
                 parent.context
             )
 
             5 -> HomeHorizontalOrderViewHolder(
-                ItemViewHomeHorizontalOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                ItemViewHomeHorizontalOrderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
                 parent.context
             )
 
             6 -> HomeVerticalOrderViewHolder(
-                ItemViewHomeVerticalOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                ItemViewHomeVerticalOrderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
                 parent.context
             )
 
@@ -196,6 +219,7 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked:()->U
             is HomeView.HomeHorizontalOrderView -> (holder as HomeHorizontalOrderViewHolder).bind(
                 item
             )
+
             is HomeView.HomeVerticalOrderView -> (holder as HomeVerticalOrderViewHolder).bind(item)
         }
     }
