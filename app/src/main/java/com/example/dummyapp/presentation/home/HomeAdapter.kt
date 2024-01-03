@@ -2,6 +2,7 @@ package com.example.dummyapp.presentation.home
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,12 +24,12 @@ import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -> Unit) :
+class HomeAdapter(private val items: List<HomeView?>, private val onClicked: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var homeOffersAdapter: HomeOffersAdapter ?=null
-    private var menuAdapter: MenuAdapter?=null
-    private var foodCategoryAdapter: FoodCategoryAdapter ?=null
+    private var homeOffersAdapter: HomeOffersAdapter? = null
+    private var menuAdapter: MenuAdapter? = null
+    private var foodCategoryAdapter: FoodCategoryAdapter? = null
     private var homeHorizontalOrderAdapter: HomeHorizontalOrderAdapter =
         HomeHorizontalOrderAdapter {
             onClicked.invoke()
@@ -54,13 +55,13 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
         }
     }
 
-    inner class MenuViewHolder(val binding: ItemViewHomeMenuBinding, val context: Context) :
+    inner class MenuViewHolder(val binding: ItemViewHomeMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             menuAdapter = MenuAdapter()
             binding.rvMenu.adapter = menuAdapter
-            binding.rvMenu.layoutManager = GridLayoutManager(context, 4)
+            binding.rvMenu.layoutManager = GridLayoutManager(binding.root.context, 4)
         }
 
         fun bind(item: HomeView.MenuView) {
@@ -97,13 +98,12 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
     }
 
     inner class FoodCategoryViewHolder(
-        val binding: ItemViewFoodCategoryBinding,
-        val context: Context
+        val binding: ItemViewFoodCategoryBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.rvFoodCategory.layoutManager = LinearLayoutManager(
-                context,
+                binding.root.context,
                 LinearLayoutManager.HORIZONTAL, false
             )
             foodCategoryAdapter = FoodCategoryAdapter()
@@ -120,13 +120,12 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
     }
 
     inner class HomeHorizontalOrderViewHolder(
-        val binding: ItemViewHomeHorizontalOrderBinding,
-        val context: Context
+        val binding: ItemViewHomeHorizontalOrderBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewRvHomeHrzOrder.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
             binding.viewRvHomeHrzOrder.adapter = homeHorizontalOrderAdapter
         }
 
@@ -138,13 +137,12 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
     }
 
     inner class HomeVerticalOrderViewHolder(
-        val binding: ItemViewHomeVerticalOrderBinding,
-        val context: Context
+        val binding: ItemViewHomeVerticalOrderBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.viewRvHomeVertOrder.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
             binding.viewRvHomeVertOrder.adapter = verticalOrderAdapter
         }
 
@@ -155,55 +153,56 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
         }
     }
 
+    inner class EmptyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            0 -> OrderStatusViewHolder(
+            VIEW_TYPE_ORDER_STATUS -> OrderStatusViewHolder(
                 ItemOrderStatusBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            1 -> BannerViewHolder(
+            VIEW_TYPE_BANNER -> BannerViewHolder(
                 ItemBannerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            2 -> MenuViewHolder(
+            VIEW_TYPE_MENU -> MenuViewHolder(
                 ItemViewHomeMenuBinding
-                    .inflate(LayoutInflater.from(parent.context), parent, false),
-                parent.context
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            3 -> OffersViewHolder(
+            VIEW_TYPE_OFFERS -> OffersViewHolder(
                 ItemViewOffersBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            4 -> FoodCategoryViewHolder(
+            VIEW_TYPE_FOOD_CATEGORY -> FoodCategoryViewHolder(
                 ItemViewFoodCategoryBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ),
-                parent.context
+                )
             )
 
-            5 -> HomeHorizontalOrderViewHolder(
+            VIEW_TYPE_HOME_HORIZONTAL_ORDER -> HomeHorizontalOrderViewHolder(
                 ItemViewHomeHorizontalOrderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ),
-                parent.context
+                )
             )
 
-            6 -> HomeVerticalOrderViewHolder(
+            VIEW_TYPE_HOME_VERTICAL_ORDER -> HomeVerticalOrderViewHolder(
                 ItemViewHomeVerticalOrderBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                ),
-                parent.context
+                )
             )
 
-            else -> throw IllegalArgumentException("Invalid view type")
+            VIEW_TYPE_NULL -> EmptyViewHolder(View(parent.context))
+            else -> {
+                throw IllegalArgumentException("Invalid view type")
+            }
         }
     }
 
@@ -221,6 +220,9 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
             )
 
             is HomeView.HomeVerticalOrderView -> (holder as HomeVerticalOrderViewHolder).bind(item)
+            null -> {
+                // Handle null item, maybe do nothing or show a placeholder
+            }
         }
     }
 
@@ -233,6 +235,7 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
             is HomeView.FoodCategoryView -> VIEW_TYPE_FOOD_CATEGORY
             is HomeView.HomeHorizontalOrderView -> VIEW_TYPE_HOME_HORIZONTAL_ORDER
             is HomeView.HomeVerticalOrderView -> VIEW_TYPE_HOME_VERTICAL_ORDER
+            null -> VIEW_TYPE_NULL
         }
     }
 
@@ -244,5 +247,7 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
         private const val VIEW_TYPE_FOOD_CATEGORY = 4
         private const val VIEW_TYPE_HOME_HORIZONTAL_ORDER = 5
         private const val VIEW_TYPE_HOME_VERTICAL_ORDER = 6
+        private const val VIEW_TYPE_NULL = 7
+
     }
 }

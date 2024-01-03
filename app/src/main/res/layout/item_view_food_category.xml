@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rv_food_category"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_10dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:itemCount="1"
     tools:listitem="@layout/item_home_food_category"
     xmlns:tools="http://schemas.android.com/tools">

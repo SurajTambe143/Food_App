@@ -1,5 +1,6 @@
 package com.example.dummyapp.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -71,6 +72,7 @@ class HomeHorizontalOrderAdapter(private val onClick: () -> Unit) :
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<HomeOrderFoodDetails>) {
         homeOrderList = list
         notifyDataSetChanged()

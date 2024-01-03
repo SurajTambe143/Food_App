@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:text="@string/txt_menu"
             android:textSize="@dimen/dimen_12sp"
-            android:textColor="@color/black"
             android:gravity="center"
             android:textAlignment="center"
             android:lines="2"

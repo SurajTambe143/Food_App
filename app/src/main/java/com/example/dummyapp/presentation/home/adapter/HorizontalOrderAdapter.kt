@@ -1,5 +1,6 @@
 package com.example.dummyapp.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -56,15 +57,16 @@ class HorizontalOrderAdapter(
                 binding.chip4Iqd.text = this.txtIQD
                 binding.chip5Ratings.text = this.txtRating
                 binding.root.setOnClickListener { onClick.invoke() }
-                binding.root.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        holder.itemView.context,
-                        R.anim.home_rv_horizontal_anim
-                    )
-                )
+//                binding.root.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        holder.itemView.context,
+//                        R.anim.home_rv_horizontal_anim
+//                    )
+//                )
             }
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<OrderFoodDetails>) {
         orderlist = list
         notifyDataSetChanged()

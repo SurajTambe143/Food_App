@@ -1,5 +1,6 @@
 package com.example.dummyapp.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class FoodCategoryAdapter() :
         return foodCategoryList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateList(list: List<FoodCategory>) {
         foodCategoryList = list
         notifyDataSetChanged()

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +24,19 @@ import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OffersItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 import com.example.dummyapp.domain.model.StickyItem
+import com.example.dummyapp.extensions.gone
+import com.example.dummyapp.extensions.visible
+import com.example.dummyapp.presentation.home.adapter.FoodCategoryAdapter
 import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
+import com.example.dummyapp.presentation.home.adapter.HomeOffersAdapter
 import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
+import com.example.dummyapp.presentation.home.adapter.MenuAdapter
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
+import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
+import com.example.dummyapp.presentation.home.concatadapter.LinearConcatAdapter
+import com.example.dummyapp.presentation.home.concatadapter.LinearFoodCategoryConcatAdapter
+import com.example.dummyapp.presentation.home.concatadapter.LinearMenuConcatAdapter
+import com.example.dummyapp.presentation.home.concatadapter.OffersConcatAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -39,11 +50,21 @@ class HomeFragment : Fragment() {
     private var menuList: List<MenuItem> = emptyList()
     private var stickyList: List<StickyItem> = emptyList()
     private var foodCategoryList: List<FoodCategory> = emptyList()
-    private var homeViewList: List<HomeView> = emptyList()
+    private var homeViewList: List<HomeView?> = emptyList()
     private var images: List<OffersItem> = emptyList()
     private var hrzOrderList: List<OrderFoodDetails> = emptyList()
     private var homeHrzOrderList: List<HomeOrderFoodDetails> = emptyList()
     private lateinit var homeAdapter: HomeAdapter
+    private lateinit var foodCategoryAdapter: FoodCategoryAdapter
+    private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
+        findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+    }
+    private var homeHorizontalOrderAdapter: HomeHorizontalOrderAdapter =
+        HomeHorizontalOrderAdapter {
+            findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+        }
+    private var menuAdapter: MenuAdapter = MenuAdapter()
+    private var homeOffersAdapter = HomeOffersAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,11 +88,11 @@ class HomeFragment : Fragment() {
         homeViewList = listOf(
             HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
             HomeView.BannerView(R.drawable.banner_img),
-            HomeView.MenuView(menuList),
-            HomeView.OffersView(images),
-            HomeView.FoodCategoryView(foodCategoryList),
-            HomeView.HomeHorizontalOrderView(homeHrzOrderList),
-            HomeView.HomeVerticalOrderView(hrzOrderList)
+            if (menuList.isEmpty()) null else HomeView.MenuView(menuList),
+            if (images.isEmpty()) null else HomeView.OffersView(images),
+            if (foodCategoryList.isEmpty()) null else HomeView.FoodCategoryView(foodCategoryList),
+            if (homeHrzOrderList.isEmpty()) null else HomeView.HomeHorizontalOrderView(homeHrzOrderList),
+            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(hrzOrderList)
         )
     }
 
@@ -87,6 +108,23 @@ class HomeFragment : Fragment() {
         homeAdapter = HomeAdapter(homeViewList) {
             findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
         }
+
+        foodCategoryAdapter = FoodCategoryAdapter()
+        foodCategoryAdapter.updateList(foodCategoryList)
+        homeOffersAdapter.updateList(images)
+        homeHorizontalOrderAdapter.updateList(homeHrzOrderList)
+        verticalOrderAdapter.updateList(hrzOrderList)
+
+        menuAdapter.updateList(menuList)
+
+        val concatAdapter = ConcatAdapter(
+            homeAdapter,
+            LinearMenuConcatAdapter(menuAdapter),
+            OffersConcatAdapter(homeOffersAdapter),
+            LinearFoodCategoryConcatAdapter(foodCategoryAdapter),
+            homeHorizontalOrderAdapter,
+            verticalOrderAdapter
+        )
         binding.rvHome.adapter = homeAdapter
         binding.rvHome.addOnScrollListener(
             RvStickyScroll(
@@ -98,7 +136,7 @@ class HomeFragment : Fragment() {
     }
 
     internal class RvStickyScroll(
-        val list: List<HomeView>,
+        val list: List<HomeView?>,
         private val stickyView: RecyclerView,
         private val rvLayoutManager: LinearLayoutManager
     ) : RecyclerView.OnScrollListener() {
@@ -114,13 +152,15 @@ class HomeFragment : Fragment() {
                 val itemView = list[position]
                 // Use 'when' expression to handle different item types
                 when (itemView) {
-                    is HomeView.OrderStatusView -> stickyView.visibility = View.GONE
-                    is HomeView.BannerView -> stickyView.visibility = View.GONE
-                    is HomeView.MenuView -> stickyView.visibility = View.GONE
+                    is HomeView.OrderStatusView -> stickyView.gone()
+                    is HomeView.BannerView -> stickyView.gone()
+                    is HomeView.MenuView -> stickyView.gone()
                     is HomeView.OffersView,
                     is HomeView.FoodCategoryView,
                     is HomeView.HomeHorizontalOrderView,
-                    is HomeView.HomeVerticalOrderView -> stickyView.visibility = View.VISIBLE
+                    is HomeView.HomeVerticalOrderView -> stickyView.visible(true)
+
+                    else -> {}
                 }
             }
         }
