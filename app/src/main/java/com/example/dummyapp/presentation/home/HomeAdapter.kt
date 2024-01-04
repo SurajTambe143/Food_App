@@ -2,6 +2,7 @@ package com.example.dummyapp.presentation.home
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,7 @@ import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -> Unit) :
+class HomeAdapter(private val items: List<HomeView?>, private val onClicked: () -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var homeOffersAdapter: HomeOffersAdapter ?=null
@@ -155,6 +156,8 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
         }
     }
 
+    inner class EmptyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -203,6 +206,8 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
                 parent.context
             )
 
+            VIEW_TYPE_NULL -> EmptyViewHolder(View(parent.context))
+
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -221,6 +226,9 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
             )
 
             is HomeView.HomeVerticalOrderView -> (holder as HomeVerticalOrderViewHolder).bind(item)
+            null -> {
+                // Handle null item, maybe do nothing or show a placeholder
+            }
         }
     }
 
@@ -233,6 +241,7 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
             is HomeView.FoodCategoryView -> VIEW_TYPE_FOOD_CATEGORY
             is HomeView.HomeHorizontalOrderView -> VIEW_TYPE_HOME_HORIZONTAL_ORDER
             is HomeView.HomeVerticalOrderView -> VIEW_TYPE_HOME_VERTICAL_ORDER
+            null -> VIEW_TYPE_NULL
         }
     }
 
@@ -244,5 +253,6 @@ class HomeAdapter(private val items: List<HomeView>, private val onClicked: () -
         private const val VIEW_TYPE_FOOD_CATEGORY = 4
         private const val VIEW_TYPE_HOME_HORIZONTAL_ORDER = 5
         private const val VIEW_TYPE_HOME_VERTICAL_ORDER = 6
+        private const val VIEW_TYPE_NULL = 7
     }
 }

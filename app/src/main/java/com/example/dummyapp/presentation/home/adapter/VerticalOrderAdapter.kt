@@ -47,12 +47,12 @@ class VerticalOrderAdapter(
                 binding.root.setOnClickListener {
                     onClick.invoke()
                 }
-                binding.root.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        holder.itemView.context,
-                        R.anim.home_rv_vertical_anim
-                    )
-                )
+//                binding.root.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        holder.itemView.context,
+//                        R.anim.home_rv_vertical_anim
+//                    )
+//                )
             }
         }
     }
