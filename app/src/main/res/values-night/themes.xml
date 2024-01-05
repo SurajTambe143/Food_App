@@ -9,5 +9,12 @@
         <item name="colorAccent">@color/black</item>
     </style>
 
+    <style name="Cairo_Font">
+        <item name="android:fontFamily">@font/cairo_regular</item>
+        <item name="fontFamily">@font/cairo_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">0.7</item>
+    </style>
+
     <style name="Theme.DummyApp" parent="Base.Theme.DummyApp" />
 </resources>
