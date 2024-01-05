@@ -9,7 +9,8 @@
         android:id="@+id/cv_horizontal_scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:strokeColor="@color/card_bg"
+        android:backgroundTint="?attr/colorPrimary"
+        app:strokeColor="?attr/colorSurface"
         app:cardCornerRadius="@dimen/dimen_15dp"
         android:layout_marginStart="@dimen/dimen_10dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,6 +41,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:gravity="start"
+                android:textColor="?attr/colorAccent"
                 android:layout_marginTop="@dimen/margin_value_min_5dp"
                 android:fontFamily="@font/cairo_regular"
                 android:lineSpacingMultiplier="0.7"
@@ -62,12 +64,14 @@
                     android:id="@+id/chip_1_likes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:chipIconTint="@color/black"
+                    android:textColor="?attr/colorAccent"
                     android:textSize="@dimen/dimen_9sp"
+                    android:backgroundTint="?attr/colorPrimary"
+                    app:chipSurfaceColor="?attr/colorPrimary"
                     android:fontFamily="@font/cairo_regular"
                     app:chipIcon="@drawable/ic_heart"
                     app:chipIconSize="@dimen/dimen_10dp"
-                    app:chipStrokeColor="@color/chip_bg"
+                    app:chipStrokeColor="?attr/colorSurface"
                     android:text="@string/item_food_details_likes_txt"/>
 
                 <com.google.android.material.chip.Chip
@@ -75,10 +79,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dimen_9sp"
+                    android:textColor="?attr/colorAccent"
                     android:backgroundTint="@color/chip_bg"
                     android:fontFamily="@font/cairo_regular"
                     app:chipIconSize="@dimen/dimen_15sp"
-                    app:chipStrokeColor="@color/chip_bg"
+                    app:chipStrokeColor="?attr/colorSurface"
                     android:text="@string/item_food_details_distance_txt"/>
 
                 <com.google.android.material.chip.Chip
@@ -87,10 +92,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dimen_9sp"
+                    android:textColor="?attr/colorAccent"
                     android:fontFamily="@font/cairo_regular"
                     app:chipIcon="@drawable/ic_location"
                     app:chipIconSize="@dimen/dimen_10sp"
-                    app:chipStrokeColor="@color/chip_bg"
+                    app:chipStrokeColor="?attr/colorPrimary"
                     android:text="@string/item_food_details_time_txt"/>
 
                 <com.google.android.material.chip.Chip
@@ -99,10 +105,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dimen_9sp"
+                    android:textColor="?attr/colorAccent"
                     android:fontFamily="@font/cairo_regular"
                     app:chipIcon="@drawable/ic_scooter_svg"
                     app:chipIconSize="@dimen/dimen_10sp"
-                    app:chipStrokeColor="@color/chip_bg"
+                    app:chipStrokeColor="?attr/colorPrimary"
                     android:text="@string/item_food_details_iqd_txt"/>
 
                 <com.google.android.material.chip.Chip
@@ -111,10 +118,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dimen_9sp"
+                    android:textColor="?attr/colorAccent"
                     android:fontFamily="@font/cairo_regular"
                     app:chipIcon="@drawable/ic_star"
                     app:chipIconSize="@dimen/dimen_10sp"
-                    app:chipStrokeColor="@color/chip_bg"
+                    app:chipStrokeColor="?attr/colorPrimary"
                     android:text="@string/item_food_details_rating_txt"/>
 
             </com.google.android.material.chip.ChipGroup>
@@ -127,10 +135,10 @@
         android:id="@+id/cv_offers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:strokeColor="@color/app_color"
+        app:strokeColor="?attr/colorSecondary"
         style="@style/CustomCardCorners"
         app:cardElevation="@dimen/dimen_3dp"
-        android:backgroundTint="@color/app_color"
+        android:backgroundTint="?attr/colorSecondary"
         android:layout_marginStart="@dimen/margin_value_min_5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +153,7 @@
                 android:id="@+id/txt_offers_on_selected_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/white"
+                android:textColor="?attr/colorPrimary"
                 android:fontFamily="@font/cairo_regular"
                 android:lineSpacingMultiplier="0.7"
                 android:paddingStart="@dimen/dimen_12dp"
@@ -180,8 +188,8 @@
                 android:id="@+id/txt_low_delivery_fee"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:textColor="@color/black"
+                android:background="?attr/colorPrimary"
+                android:textColor="?attr/colorAccent"
                 android:paddingStart="@dimen/dimen_12dp"
                 android:paddingEnd="@dimen/dimen_12dp"
                 android:fontFamily="@font/cairo_regular"

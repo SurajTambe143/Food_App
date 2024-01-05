@@ -25,6 +25,7 @@
             android:lineSpacingMultiplier="0.7"
             android:paddingStart="@dimen/dimen_30dp"
             android:paddingEnd="@dimen/dimen_30dp"
+            android:textColor="?attr/colorAccent"
             android:text="@string/txt_loading_msg"
             android:textSize="@dimen/dimen_25sp"
             app:layout_constraintBottom_toBottomOf="parent"

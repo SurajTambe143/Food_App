@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_food_category"
         android:layout_marginTop="@dimen/dimen_10dp"
+        android:textColor="?attr/colorAccent"
         android:textSize="@dimen/dimen_12sp"
         android:fontFamily="@font/cairo_regular"
         app:layout_constraintTop_toBottomOf="@id/img_category"
