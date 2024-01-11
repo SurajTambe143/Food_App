@@ -13,7 +13,7 @@
         android:visibility="visible"
         android:orientation="vertical"
         shimmer:duration="1000"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         shimmer:layout_constraintTop_toTopOf="parent"
         shimmer:layout_constraintStart_toStartOf="parent">
 

@@ -56,12 +56,12 @@ class HorizontalOrderAdapter(
                 binding.chip4Iqd.text = this.txtIQD
                 binding.chip5Ratings.text = this.txtRating
                 binding.root.setOnClickListener { onClick.invoke() }
-                binding.root.startAnimation(
-                    AnimationUtils.loadAnimation(
-                        holder.itemView.context,
-                        R.anim.home_rv_horizontal_anim
-                    )
-                )
+//                binding.root.startAnimation(
+//                    AnimationUtils.loadAnimation(
+//                        holder.itemView.context,
+//                        R.anim.home_rv_horizontal_anim
+//                    )
+//                )
             }
         }
     }

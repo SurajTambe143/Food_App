@@ -23,6 +23,8 @@ import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OffersItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 import com.example.dummyapp.domain.model.StickyItem
+import com.example.dummyapp.extensions.gone
+import com.example.dummyapp.extensions.visible
 import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
@@ -39,7 +41,7 @@ class HomeFragment : Fragment() {
     private var menuList: List<MenuItem> = emptyList()
     private var stickyList: List<StickyItem> = emptyList()
     private var foodCategoryList: List<FoodCategory> = emptyList()
-    private var homeViewList: List<HomeView> = emptyList()
+    private var homeViewList: List<HomeView?> = emptyList()
     private var images: List<OffersItem> = emptyList()
     private var hrzOrderList: List<OrderFoodDetails> = emptyList()
     private var homeHrzOrderList: List<HomeOrderFoodDetails> = emptyList()
@@ -67,11 +69,11 @@ class HomeFragment : Fragment() {
         homeViewList = listOf(
             HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
             HomeView.BannerView(R.drawable.banner_img),
-            HomeView.MenuView(menuList),
-            HomeView.OffersView(images),
-            HomeView.FoodCategoryView(foodCategoryList),
-            HomeView.HomeHorizontalOrderView(homeHrzOrderList),
-            HomeView.HomeVerticalOrderView(hrzOrderList)
+            if (menuList.isEmpty()) null else HomeView.MenuView(menuList),
+            if (images.isEmpty()) null else HomeView.OffersView(images),
+            if (foodCategoryList.isEmpty()) null else HomeView.FoodCategoryView(foodCategoryList),
+            if (homeHrzOrderList.isEmpty()) null else HomeView.HomeHorizontalOrderView(homeHrzOrderList),
+            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(hrzOrderList)
         )
     }
 
@@ -98,7 +100,7 @@ class HomeFragment : Fragment() {
     }
 
     internal class RvStickyScroll(
-        val list: List<HomeView>,
+        val list: List<HomeView?>,
         private val stickyView: RecyclerView,
         private val rvLayoutManager: LinearLayoutManager
     ) : RecyclerView.OnScrollListener() {
@@ -114,13 +116,14 @@ class HomeFragment : Fragment() {
                 val itemView = list[position]
                 // Use 'when' expression to handle different item types
                 when (itemView) {
-                    is HomeView.OrderStatusView -> stickyView.visibility = View.GONE
-                    is HomeView.BannerView -> stickyView.visibility = View.GONE
-                    is HomeView.MenuView -> stickyView.visibility = View.GONE
+                    is HomeView.OrderStatusView -> stickyView.gone()
+                    is HomeView.BannerView -> stickyView.gone()
+                    is HomeView.MenuView -> stickyView.gone()
                     is HomeView.OffersView,
                     is HomeView.FoodCategoryView,
                     is HomeView.HomeHorizontalOrderView,
-                    is HomeView.HomeVerticalOrderView -> stickyView.visibility = View.VISIBLE
+                    is HomeView.HomeVerticalOrderView -> stickyView.visible(true)
+                    else -> {}
                 }
             }
         }

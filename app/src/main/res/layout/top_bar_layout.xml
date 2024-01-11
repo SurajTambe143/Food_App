@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/dimen_20dp"
-    android:background="@color/white"
+    android:background="?attr/colorPrimary"
     android:paddingBottom="@dimen/dimen_10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -22,12 +22,11 @@
         android:id="@+id/name_header"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="wrap_content"
+        style="@style/Cairo_Font"
         android:layout_marginStart="@dimen/dimen_10dp"
         android:text="Alsaree3 App"
         android:textSize="@dimen/dimen_16sp"
         android:layout_marginTop="@dimen/dimen_5dp"
-        android:fontFamily="@font/cairo_regular"
-        android:lineSpacingMultiplier="0.7"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,10 +34,9 @@
         android:id="@+id/name_header_area"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="wrap_content"
+        style="@style/Cairo_Font"
         android:layout_marginStart="@dimen/dimen_10dp"
         android:text="AI Furjan Area"
-        android:fontFamily="@font/cairo_regular"
-        android:lineSpacingMultiplier="0.7"
         android:textSize="@dimen/dimen_12sp"
         app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toBottomOf="@id/name_header" />
@@ -70,8 +68,8 @@
             android:layout_height="@dimen/dimen_41dp"
             android:indeterminate="false"
             android:progress="20"
-            app:indicatorColor="@color/nav_color"
-            app:trackColor="@color/card_bg"
+            app:indicatorColor="?attr/colorSecondary"
+            app:trackColor="?attr/colorSurface"
             app:indicatorDirectionCircular="clockwise"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -83,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20%"
+            style="@style/Cairo_Font"
             android:textSize="@dimen/dimen_10sp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="@id/order_progress_track"

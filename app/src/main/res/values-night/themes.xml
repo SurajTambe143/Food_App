@@ -1,7 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DummyApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+         Customize your dark theme here.
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/bg_color</item>
+        <item name="colorSecondary">@color/app_color</item>
+        <item name="colorSurface">@color/card_bg</item>
+        <item name="colorAccent">@color/black</item>
     </style>
+
+    <style name="Cairo_Font">
+        <item name="android:fontFamily">@font/cairo_regular</item>
+        <item name="fontFamily">@font/cairo_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">0.7</item>
+    </style>
+
+    <style name="Theme.DummyApp" parent="Base.Theme.DummyApp" />
 </resources>

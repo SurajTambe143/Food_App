@@ -3,9 +3,12 @@
     <style name="Base.Theme.DummyApp" parent="Theme.Material3.DayNight.NoActionBar">
          Customize your light theme here.
          <item name="colorPrimary">@color/white</item>
-        <item name="colorOnPrimary">@color/nav_color</item>
-        <item name="android:navigationBarColor">@color/white</item>
-        <item name="navigationIconTint">@color/black</item>
+        <item name="colorPrimaryVariant">@color/bg_color</item>
+        <item name="colorSecondary">@color/app_color</item>
+        <item name="colorSurface">@color/card_bg</item>
+        <item name="colorAccent">@color/black</item>
+<!--        <item name="android:navigationBarColor">@color/white</item>-->
+<!--        <item name="navigationIconTint">@color/black</item>-->
 
     </style>
     <style name="circle">
@@ -36,6 +39,14 @@
         <item name="cornerSizeTopLeft">@dimen/dimen_0dp</item>
         <item name="cornerSizeTopRight">@dimen/dimen_5dp</item>
         <item name="cornerSizeBottomRight">@dimen/dimen_5dp</item>
+    </style>
+
+    <style name="Cairo_Font">
+        <item name="android:fontFamily">@font/cairo_regular</item>
+        <item name="fontFamily">@font/cairo_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:lineSpacingMultiplier">0.7</item>
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
     <style name="Theme.DummyApp" parent="Base.Theme.DummyApp" />
