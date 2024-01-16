@@ -22,6 +22,7 @@ import com.example.dummyapp.presentation.home.adapter.HomeOffersAdapter
 import com.example.dummyapp.presentation.home.adapter.MenuAdapter
 import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
+import com.example.dummyapp.utils.Constants.BASE_IMAGE_URL
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeAdapter(private val items: List<HomeView?>, private val onClicked: () -> Unit) :
@@ -51,7 +52,8 @@ class HomeAdapter(private val items: List<HomeView?>, private val onClicked: () 
     inner class BannerViewHolder(val binding: ItemBannerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeView.BannerView) {
-            binding.imgBanner.load(item.imgBanner)
+//            binding.imgBanner.load(item.imgBanner)
+            binding.imgBanner.load(BASE_IMAGE_URL+item.imgBanner)
         }
     }
 

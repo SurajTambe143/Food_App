@@ -1,0 +1,32 @@
+package com.example.dummyapp.domain.model.entities.remote.homemain
+
+data class HorizontalStore(
+    val _id: String? = "",
+    val address: String? = "",
+    val country_phone_code: String? = "",
+    val created_at: String? = "",
+    val delivery_price_after_discount: Int? = 0,
+    val delivery_radius: Int? = 0,
+    val delivery_time: Int? = 0,
+    val delivery_time_max: Int? = 0,
+    val distance: Double? = 0.0,
+    val email: String? = "",
+    val extra_delivery_charge: Int? = 0,
+    val famous_products_tags: List<String>? = listOf(),
+    val image_url: String? = "",
+    val is_discount_on_delivery_price: Boolean? = false,
+    val is_store_busy: Boolean? = false,
+    val is_taking_schedule_order: Boolean? = false,
+    val is_visible: Boolean? = false,
+    val location: List<Double>? = listOf(),
+    val name: String? = "",
+    val offer: String? = "",
+    val phone: String? = "",
+    val price_rating: Int? = 0,
+    val qr_image_url: String? = "",
+    val slogan: String? = "",
+    val store_time: List<StoreTimeX>? = listOf(),
+    val user_rate: Double? = 0.0,
+    val user_rate_count: Int? = 0,
+    val website_url: String? = ""
+)

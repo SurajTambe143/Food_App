@@ -1,19 +1,19 @@
 package com.example.dummyapp.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemHomeFoodCategoryBinding
-import com.example.dummyapp.domain.model.FoodCategory
-import com.example.dummyapp.domain.model.MenuItem
+import com.example.dummyapp.domain.model.entities.remote.homemain.Brand
+import com.example.dummyapp.utils.Constants.BASE_IMAGE_URL
 
 class FoodCategoryAdapter() :
     RecyclerView.Adapter<FoodCategoryAdapter.FoodViewHolder>() {
 
-    private var foodCategoryList: List<FoodCategory> = emptyList<FoodCategory>().toMutableList()
+    private var foodCategoryList: List<Brand>? = emptyList<Brand>().toMutableList()
 
     class FoodViewHolder(val binding: ItemHomeFoodCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -34,18 +34,19 @@ class FoodCategoryAdapter() :
                 layoutParams.leftMargin = marginValue
                 binding.root.layoutParams = layoutParams
             }
-            with(foodCategoryList[position]) {
-                binding.imgCategory.load(this.imgFood)
-                binding.txtFood.text = this.txtFood
+            with(foodCategoryList?.get(position) ?: null) {
+                binding.imgCategory.load(BASE_IMAGE_URL+ (this?.image_url ?: 0))
+                binding.txtFood.text = this?.name ?: ""
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return foodCategoryList.size
+        return foodCategoryList?.size ?: 0
     }
 
-    fun updateList(list: List<FoodCategory>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(list: List<Brand>?) {
         foodCategoryList = list
         notifyDataSetChanged()
     }

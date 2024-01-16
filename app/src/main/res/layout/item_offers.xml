@@ -1,82 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:cardCornerRadius="@dimen/dimen_10dp"
+    app:strokeColor="?attr/colorSurface"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:src="@drawable/bg_offers"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_140dp"
-        android:scaleType="fitXY"
-        android:layout_marginEnd="@dimen/dimen_5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:src="@drawable/bg_offers"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_140dp"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-    <TextView
-        android:id="@+id/txt_dod"
-        android:text="Deals of the day"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="wrap_content"
-        style="@style/Cairo_Font"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/dimen_12dp"
-        android:layout_marginTop="@dimen/dimen_10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/gl_divider"
-        app:layout_constraintBottom_toTopOf="@id/txt_offers"/>
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            android:id="@+id/gl_divider"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            app:layout_constraintGuide_percent="0.5"/>-->
 
-    <TextView
-        android:id="@+id/txt_offers"
-        android:text="@string/offers"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/dimen_12sp"
-        android:layout_marginStart="@dimen/dimen_12dp"
-        style="@style/Cairo_Font"
-        app:layout_constraintTop_toBottomOf="@id/txt_dod"
-        app:layout_constraintStart_toStartOf="parent"
-        android:maxLines="2"
-        app:layout_constraintEnd_toEndOf="@id/gl_divider"
-        app:layout_constraintBottom_toTopOf="@id/load_more"/>
+<!--        <TextView-->
+<!--            android:id="@+id/txt_dod"-->
+<!--            tools:text="Deals of the day"-->
+<!--            android:layout_width="@dimen/dimen_0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/Cairo_Font"-->
+<!--            android:textSize="@dimen/dimen_20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_marginStart="@dimen/dimen_12dp"-->
+<!--            android:layout_marginTop="@dimen/dimen_10dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/gl_divider"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/txt_offers"/>-->
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/load_more"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="wrap_content"
-        android:text="Load More"
-        style="@style/Cairo_Font"
-        android:textColor="@color/white"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        android:backgroundTint="@color/nav_color"
-        android:layout_marginEnd="@dimen/dimen_30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/gl_divider"
-        app:layout_constraintTop_toBottomOf="@id/txt_offers"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"/>
+<!--        <TextView-->
+<!--            android:id="@+id/txt_offers"-->
+<!--            tools:text="@string/offers"-->
+<!--            android:layout_width="@dimen/dimen_0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="@dimen/dimen_12sp"-->
+<!--            android:layout_marginStart="@dimen/dimen_12dp"-->
+<!--            style="@style/Cairo_Font"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/txt_dod"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            android:maxLines="2"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/gl_divider"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/load_more"/>-->
 
-    <ImageView
-        android:id="@+id/offer_meal"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="@dimen/dimen_0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_divider"
-        android:src="@drawable/offers_meal"
-        android:scaleType="fitXY"
-        android:layout_marginEnd="@dimen/dimen_5dp"
-        app:layout_constraintBottom_toBottomOf="@id/imageView"/>
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/load_more"-->
+<!--            android:layout_width="@dimen/dimen_0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            tools:text="Load More"-->
+<!--            style="@style/Cairo_Font"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:layout_marginStart="@dimen/dimen_10dp"-->
+<!--            android:backgroundTint="@color/nav_color"-->
+<!--            android:layout_marginEnd="@dimen/dimen_30dp"-->
+<!--            android:visibility="invisible"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/gl_divider"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/txt_offers"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/imageView"/>-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--        <ImageView-->
+<!--            android:id="@+id/offer_meal"-->
+<!--            android:layout_width="@dimen/dimen_0dp"-->
+<!--            android:layout_height="@dimen/dimen_0dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="@id/gl_divider"-->
+<!--            tools:src="@drawable/offers_meal"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:layout_marginEnd="@dimen/dimen_5dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/imageView"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

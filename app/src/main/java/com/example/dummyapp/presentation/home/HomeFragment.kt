@@ -1,38 +1,39 @@
 package com.example.dummyapp.presentation.home
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dummyapp.R
+import com.example.dummyapp.data.remote.dto.HomeMainResponse
+import com.example.dummyapp.data.repository.HomeMainRepositoryImpl
 import com.example.dummyapp.databinding.FragmentHomeBinding
-import com.example.dummyapp.databinding.ItemHomeStickyRvBinding
 import com.example.dummyapp.domain.model.FoodCategory
 import com.example.dummyapp.domain.model.HomeOrderFoodDetails
 import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OffersItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 import com.example.dummyapp.domain.model.StickyItem
-import com.example.dummyapp.extensions.gone
-import com.example.dummyapp.extensions.visible
-import com.example.dummyapp.presentation.home.adapter.HomeHorizontalOrderAdapter
-import com.example.dummyapp.presentation.home.adapter.HorizontalOrderAdapter
+import com.example.dummyapp.utils.gone
+import com.example.dummyapp.utils.visible
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
+import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModel
+import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
+import com.example.dummyapp.utils.RetrofitBuilder
+import com.example.dummyapp.utils.encryptData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 
 class HomeFragment : Fragment() {
@@ -46,35 +47,57 @@ class HomeFragment : Fragment() {
     private var hrzOrderList: List<OrderFoodDetails> = emptyList()
     private var homeHrzOrderList: List<HomeOrderFoodDetails> = emptyList()
     private lateinit var homeAdapter: HomeAdapter
+    private val TAG = "HomeFragment"
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch(Dispatchers.IO) {
-            setUpLists()
+//            setUpLists()
         }
-        setUpUI()
+//        setUpUI()
+        apiDemo()
+
     }
 
-    private suspend fun setUpLists() {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun apiDemo() {
+        val encryptedData =
+            encryptData("xAwrEKbSeRFbPASuggNTXNPcHeJNaUNU", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
+        Log.w(TAG, "KEY :  $encryptedData")
+
+        val apiHelper = HomeMainRepositoryImpl(RetrofitBuilder.apiService)
+        val myViewModel = ViewModelProvider(
+            this, HomeMainViewModelFactory(apiHelper)
+        )[HomeMainViewModel::class.java]
+
+        myViewModel.listResponse.observe(viewLifecycleOwner) {
+            setUpLists(it)
+            Log.e(TAG, "apiDemo: $it")
+        }
+    }
+
+    private fun setUpLists(list: HomeMainResponse) {
         loadLists()
+        loadHorizontalOrder(list)
         homeViewList = listOf(
             HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
-            HomeView.BannerView(R.drawable.banner_img),
+            HomeView.BannerView(list.campaign_detail?.offer_image_url),
             if (menuList.isEmpty()) null else HomeView.MenuView(menuList),
-            if (images.isEmpty()) null else HomeView.OffersView(images),
-            if (foodCategoryList.isEmpty()) null else HomeView.FoodCategoryView(foodCategoryList),
-            if (homeHrzOrderList.isEmpty()) null else HomeView.HomeHorizontalOrderView(homeHrzOrderList),
-            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(hrzOrderList)
+            HomeView.OffersView(list.banner),
+            HomeView.FoodCategoryView(list.brands),
+            HomeView.HomeHorizontalOrderView(homeHrzOrderList),
+//            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(hrzOrderList)
         )
+        setUpUI()
     }
 
 
@@ -92,9 +115,7 @@ class HomeFragment : Fragment() {
         binding.rvHome.adapter = homeAdapter
         binding.rvHome.addOnScrollListener(
             RvStickyScroll(
-                homeViewList,
-                binding.stickyHeader,
-                layoutManager
+                homeViewList, binding.stickyHeader, layoutManager
             )
         )
     }
@@ -119,78 +140,74 @@ class HomeFragment : Fragment() {
                     is HomeView.OrderStatusView -> stickyView.gone()
                     is HomeView.BannerView -> stickyView.gone()
                     is HomeView.MenuView -> stickyView.gone()
-                    is HomeView.OffersView,
-                    is HomeView.FoodCategoryView,
-                    is HomeView.HomeHorizontalOrderView,
-                    is HomeView.HomeVerticalOrderView -> stickyView.visible(true)
+                    is HomeView.OffersView, is HomeView.FoodCategoryView, is HomeView.HomeHorizontalOrderView, is HomeView.HomeVerticalOrderView -> stickyView.visible(
+                        true
+                    )
+
                     else -> {}
                 }
             }
         }
     }
 
-    private suspend fun loadLists() {
-        loadMenu()
-        loadSticky()
-        loadCategory()
-        loadOffers()
-        loadHorizontalOrder()
+    private fun loadLists() {
+//        loadMenu()
+//        loadSticky()
+//        loadCategory()
+//        loadOffers()
+//        loadHorizontalOrder()
     }
 
-    private suspend fun loadHorizontalOrder() {
-        hrzOrderList = listOf(
-            OrderFoodDetails(
-                R.drawable.food_items_rectangle_img,
-                "Ultimate Chicken - Wraps, Pl",
-                "500+",
-                "2.5 KM Away",
-                "25 - 45 Mins",
-                "IQD 1000",
-                "3.4 Excellent"
-            ),
-            OrderFoodDetails(
-                R.drawable.food_items_rectangle_img_1,
-                "9021PHO Restaurant",
-                "500+",
-                "2.5 KM Away",
-                "25 - 45 Mins",
-                "IQD 1000",
-                "3.4 Excellent"
-            ),
-            OrderFoodDetails(
-                R.drawable.food_items_rectangle_img_2,
-                "Burgatory Restaurant",
-                "500+",
-                "2.5 KM Away",
-                "25 - 45 Mins",
-                "IQD 1000",
-                "3.4 Excellent"
-            ),
-            OrderFoodDetails(
-                R.drawable.food_items_rectangle_img_3,
-                "Latitude Cafe",
-                "500+",
-                "2.5 KM Away",
-                "25 - 45 Mins",
-                "IQD 1000",
-                "3.4 Excellent"
-            ),
-        )
-        homeHrzOrderList = listOf(
-            HomeOrderFoodDetails(
-                "Order Again",
-                hrzOrderList
-            ),
-            HomeOrderFoodDetails(
-                "Featured",
-                hrzOrderList
-            ),
-            HomeOrderFoodDetails(
-                "Offers Nearby",
-                hrzOrderList
-            )
-        )
-//        delay(500)
+    private fun loadHorizontalOrder(list: HomeMainResponse) {
+//        hrzOrderList = listOf(
+//            OrderFoodDetails(
+//                R.drawable.food_items_rectangle_img,
+//                "Ultimate Chicken - Wraps, Pl",
+//                "500+",
+//                "2.5 KM Away",
+//                "25 - 45 Mins",
+//                "IQD 1000",
+//                "3.4 Excellent"
+//            ),
+//            OrderFoodDetails(
+//                R.drawable.food_items_rectangle_img_1,
+//                "9021PHO Restaurant",
+//                "500+",
+//                "2.5 KM Away",
+//                "25 - 45 Mins",
+//                "IQD 1000",
+//                "3.4 Excellent"
+//            ),
+//            OrderFoodDetails(
+//                R.drawable.food_items_rectangle_img_2,
+//                "Burgatory Restaurant",
+//                "500+",
+//                "2.5 KM Away",
+//                "25 - 45 Mins",
+//                "IQD 1000",
+//                "3.4 Excellent"
+//            ),
+//            OrderFoodDetails(
+//                R.drawable.food_items_rectangle_img_3,
+//                "Latitude Cafe",
+//                "500+",
+//                "2.5 KM Away",
+//                "25 - 45 Mins",
+//                "IQD 1000",
+//                "3.4 Excellent"
+//            ),
+//        )
+//        homeHrzOrderList = listOf(
+//            HomeOrderFoodDetails(
+//                list.ads_title, list.ads
+//            ), HomeOrderFoodDetails(
+//                list.store_listing_title, list.store_offers
+//            ), HomeOrderFoodDetails(
+//                list.horizontal_store_title, list.horizontal_stores
+//            ), HomeOrderFoodDetails(
+//                list.horizontal_store_title_2, list.horizontal_stores_2
+//            )
+//        )
     }
 
     private suspend fun loadOffers() {

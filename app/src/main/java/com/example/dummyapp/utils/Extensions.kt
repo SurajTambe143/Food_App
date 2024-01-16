@@ -1,4 +1,4 @@
-package com.example.dummyapp.extensions
+package com.example.dummyapp.utils
 
 import android.view.View
 
