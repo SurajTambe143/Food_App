@@ -2,6 +2,7 @@ package com.example.dummyapp.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.math.BigDecimal
 import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -24,4 +25,13 @@ fun encryptData(data: String, AES_API_KEY: String, AES_API_IV: String): String {
         .trim()
         .replace("\n", "")
         .replace("\r", "")
+}
+
+fun homeOrderDeliveryTimeConverter(start:Int?,end:Int?):String{
+    return ("$start - $end Mins")
+}
+
+fun homeOrderDistanceConverter(input:Double?):String{
+    val roundedNumber = input?.let { BigDecimal(it).setScale(2, BigDecimal.ROUND_HALF_UP).toDouble() }
+    return ("$roundedNumber KM Away")
 }

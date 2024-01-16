@@ -1,10 +1,12 @@
 package com.example.dummyapp.presentation.home.model
 
+import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.model.HomeOrderFoodDetails
 import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 import com.example.dummyapp.domain.model.entities.remote.homemain.Banner
 import com.example.dummyapp.domain.model.entities.remote.homemain.Brand
+import com.example.dummyapp.domain.model.entities.remote.homescroll.Store
 
 sealed class HomeView {
     data class OrderStatusView(val orderNumber:String?) : HomeView()
@@ -13,5 +15,5 @@ sealed class HomeView {
     data class OffersView(val offersList: List<Banner>?): HomeView()
     data class FoodCategoryView(val foodCategoryList: List<Brand>?):HomeView()
     data class HomeHorizontalOrderView(val homeOrderFoodDetails:List<HomeOrderFoodDetails>):HomeView()
-    data class HomeVerticalOrderView(val orderFoodDetails:List<OrderFoodDetails>):HomeView()
+    data class HomeVerticalOrderView(val orderFoodDetails:List<Store?>?):HomeView()
 }

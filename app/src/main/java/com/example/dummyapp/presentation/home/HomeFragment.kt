@@ -11,11 +11,13 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dummyapp.R
 import com.example.dummyapp.data.remote.dto.HomeMainResponse
+import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.data.repository.HomeMainRepositoryImpl
 import com.example.dummyapp.databinding.FragmentHomeBinding
 import com.example.dummyapp.domain.model.FoodCategory
@@ -27,6 +29,7 @@ import com.example.dummyapp.domain.model.StickyItem
 import com.example.dummyapp.utils.gone
 import com.example.dummyapp.utils.visible
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
+import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModel
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
@@ -34,6 +37,7 @@ import com.example.dummyapp.utils.RetrofitBuilder
 import com.example.dummyapp.utils.encryptData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class HomeFragment : Fragment() {
@@ -47,7 +51,12 @@ class HomeFragment : Fragment() {
     private var hrzOrderList: List<OrderFoodDetails> = emptyList()
     private var homeHrzOrderList: List<HomeOrderFoodDetails> = emptyList()
     private lateinit var homeAdapter: HomeAdapter
+    private var homeMainResponse: HomeMainResponse?=null
+    private var homeScrollResponse: HomeScrollResponse?=null
     private val TAG = "HomeFragment"
+    private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
+        findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -78,24 +87,29 @@ class HomeFragment : Fragment() {
         val myViewModel = ViewModelProvider(
             this, HomeMainViewModelFactory(apiHelper)
         )[HomeMainViewModel::class.java]
-
         myViewModel.listResponse.observe(viewLifecycleOwner) {
-            setUpLists(it)
+            homeMainResponse=it
             Log.e(TAG, "apiDemo: $it")
+            setUpLists(it)
+        }
+        myViewModel.homeScrollListData.observe(viewLifecycleOwner) {
+            homeScrollResponse=it
+            Log.e(TAG, "apiScroll Demo: $it")
+            verticalOrderAdapter.updateList(it.stores)
         }
     }
 
-    private fun setUpLists(list: HomeMainResponse) {
-        loadLists()
-        loadHorizontalOrder(list)
+    private fun setUpLists(homeMainResponse: HomeMainResponse) {
+//        loadLists()
+//        loadHorizontalOrder(list)
         homeViewList = listOf(
             HomeView.OrderStatusView("Order Number - 5th Avenue - AI Furjan Area"),
-            HomeView.BannerView(list.campaign_detail?.offer_image_url),
+            HomeView.BannerView(homeMainResponse.campaign_detail?.offer_image_url),
             if (menuList.isEmpty()) null else HomeView.MenuView(menuList),
-            HomeView.OffersView(list.banner),
-            HomeView.FoodCategoryView(list.brands),
+            HomeView.OffersView(homeMainResponse.banner),
+            HomeView.FoodCategoryView(homeMainResponse.brands),
             HomeView.HomeHorizontalOrderView(homeHrzOrderList),
-//            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(hrzOrderList)
+//            if (hrzOrderList.isEmpty()) null else HomeView.HomeVerticalOrderView(homeScrollResponse.stores)
         )
         setUpUI()
     }
@@ -112,7 +126,11 @@ class HomeFragment : Fragment() {
         homeAdapter = HomeAdapter(homeViewList) {
             findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
         }
-        binding.rvHome.adapter = homeAdapter
+        val concatAdapter = ConcatAdapter(
+            homeAdapter,
+            verticalOrderAdapter
+        )
+        binding.rvHome.adapter = concatAdapter
         binding.rvHome.addOnScrollListener(
             RvStickyScroll(
                 homeViewList, binding.stickyHeader, layoutManager

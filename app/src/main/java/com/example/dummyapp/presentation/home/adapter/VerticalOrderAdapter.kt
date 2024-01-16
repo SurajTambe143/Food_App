@@ -8,12 +8,17 @@ import coil.load
 import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.domain.model.OrderFoodDetails
+import com.example.dummyapp.domain.model.entities.remote.homescroll.Store
+import com.example.dummyapp.utils.Constants.BASE_IMAGE_URL
+import com.example.dummyapp.utils.gone
+import com.example.dummyapp.utils.homeOrderDeliveryTimeConverter
+import com.example.dummyapp.utils.homeOrderDistanceConverter
 
 class VerticalOrderAdapter(
     private val onClick: () -> Unit
 ) : RecyclerView.Adapter<VerticalOrderAdapter.VerticalOrderViewHolder>() {
 
-    private var orderList: List<OrderFoodDetails> = emptyList<OrderFoodDetails>().toMutableList()
+    private var orderList: List<Store?>? = emptyList<Store>().toMutableList()
 
     class VerticalOrderViewHolder(val binding: ItemHomeFoodDetailsVerticalScrollBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -31,22 +36,27 @@ class VerticalOrderAdapter(
     }
 
     override fun getItemCount(): Int {
-        return orderList.size
+        return orderList?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: VerticalOrderViewHolder, position: Int) {
         with(holder) {
-            with(orderList[position]) {
-                binding.itemFoodDetailsImg.load(this.imgOrder)
-                binding.itemFoodDetailsTxt.text = this.txtTitle
-                binding.chip1Likes.text = this.txtLikes
-                binding.chip2Distance.text = this.txtDistance
-                binding.chip3Time.text = this.txtTime
-                binding.chip4Iqd.text = this.txtIQD
-                binding.chip5Ratings.text = this.txtRating
+            with(orderList?.get(position)) {
+                binding.itemFoodDetailsImg.load(BASE_IMAGE_URL + this?.image_url)
+                binding.itemFoodDetailsTxt.text = this?.name
+                binding.chip1Likes.text = this?.user_rate.toString()
+                binding.chip2Distance.text = homeOrderDistanceConverter(this?.distance)
+                binding.chip3Time.text = homeOrderDeliveryTimeConverter(this?.delivery_time,this?.delivery_time_max)
+                binding.chip4Iqd.text = this?.user_rate_count.toString()
+                binding.chip5Ratings.text = this?.user_rate.toString()
                 binding.root.setOnClickListener {
                     onClick.invoke()
                 }
+                binding.txtOffersOnSelectedItem.text = (if (this?.offer == "") {
+                    binding.txtOffersOnSelectedItem.gone()
+                    binding.lowerTriangleOrange.gone()
+                } else this?.offer
+                        ).toString()
 //                binding.root.startAnimation(
 //                    AnimationUtils.loadAnimation(
 //                        holder.itemView.context,
@@ -57,7 +67,7 @@ class VerticalOrderAdapter(
         }
     }
 
-    fun updateList(list: List<OrderFoodDetails>) {
+    fun updateList(list: List<Store?>?) {
         orderList = list
         notifyDataSetChanged()
     }
