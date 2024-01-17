@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import com.example.dummyapp.data.remote.dto.HomeMainResponse
 import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.repository.HomeMainRepository
+import com.example.dummyapp.utils.APIResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
@@ -18,13 +19,13 @@ class HomeMainViewModel(val repository: HomeMainRepository):ViewModel() {
 
     private  val TAG = "HomeMainViewModel"
 
-    private val liveData = MutableLiveData<HomeMainResponse>()
-    val listResponse: LiveData<HomeMainResponse>
+    private val liveData = MutableLiveData<APIResponse<HomeMainResponse>>()
+    val listResponse: LiveData<APIResponse<HomeMainResponse>>
         get() = liveData
 
-    private val homeScrollData = MutableLiveData<HomeScrollResponse>()
-    val homeScrollListData: LiveData<HomeScrollResponse>
-        get() = homeScrollData
+//    private val homeScrollData = MutableLiveData<HomeScrollResponse>()
+//    val homeScrollListData: LiveData<HomeScrollResponse>
+//        get() = homeScrollData
 
     val scrollData=repository.getHomeScrollDetails().cachedIn(viewModelScope)
 
@@ -44,7 +45,7 @@ class HomeMainViewModel(val repository: HomeMainRepository):ViewModel() {
                 .collect {values->
                     // list of users from the network
                     Log.e(TAG, "fetchUsers: $values")
-                    liveData.value=values
+                    liveData.postValue(APIResponse.Success(values))
                 }
         }
     }

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +36,7 @@ import com.example.dummyapp.presentation.home.adapter.VerticalOrderAdapter
 import com.example.dummyapp.presentation.home.model.HomeView
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModel
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
+import com.example.dummyapp.utils.APIResponse
 import com.example.dummyapp.utils.RetrofitBuilder
 import com.example.dummyapp.utils.encryptData
 import kotlinx.coroutines.Dispatchers
@@ -75,6 +77,11 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val rotateAnimationInner= AnimationUtils.loadAnimation(requireActivity(), R.anim.customize_circular_progress_bar_inner)
+        val rotateAnimationOuter = AnimationUtils.loadAnimation(requireActivity(), R.anim.customize_circular_progress_bar_outer)
+        binding.loadingLayout.loadingProgressOuter.startAnimation(rotateAnimationOuter)
+        binding.loadingLayout.loadingProgressInner.startAnimation(rotateAnimationInner)
         lifecycleScope.launch(Dispatchers.IO) {
 //            setUpLists()
         }
@@ -99,9 +106,26 @@ class HomeFragment : Fragment() {
             }
         }
         myViewModel.listResponse.observe(viewLifecycleOwner) {
-            homeMainResponse=it
-            Log.e(TAG, "apiDemo: $it")
-            setUpLists(it)
+            when(it){
+                is APIResponse.Loading -> {
+                    binding.errorLayout.root.gone()
+                    binding.loadingLayout.root.visible(true)
+                }
+                is APIResponse.Success -> {
+                    it.data.let {
+                        Log.e(TAG, "apiDemo: $it")
+                        if (it != null) {
+                            setUpLists(it)
+                        }
+                    }
+                    binding.errorLayout.root.gone()
+                    binding.loadingLayout.root.gone()
+                }
+                is APIResponse.Error -> {
+                    binding.loadingLayout.root.gone()
+                    binding.errorLayout.root.visible(true)
+                }
+            }
         }
 //        myViewModel.homeScrollListData.observe(viewLifecycleOwner) {
 //            homeScrollResponse=it

@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dummyapp.databinding.ItemHomeFoodDetailsVerticalScrollBinding
 import com.example.dummyapp.databinding.ItemLoaderPagingBinding
 
 class HomeScrollDetailsLoaderAdapter : LoadStateAdapter<HomeScrollDetailsLoaderAdapter.HomeScrollDetailsLoaderViewHolder>() {
