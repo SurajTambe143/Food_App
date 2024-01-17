@@ -1,7 +1,10 @@
 package com.example.dummyapp.utils
 
+import android.content.Context
+import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.dummyapp.R
 import java.math.BigDecimal
 import java.util.Base64
 import javax.crypto.Cipher
@@ -27,11 +30,11 @@ fun encryptData(data: String, AES_API_KEY: String, AES_API_IV: String): String {
         .replace("\r", "")
 }
 
-fun homeOrderDeliveryTimeConverter(start:Int?,end:Int?):String{
-    return ("$start - $end Mins")
+fun homeOrderDeliveryTimeConverter(context: Context ,start:Int?, end:Int?):String{
+    return ("$start - $end ${context.getString(R.string.home_chip_text_mins)}")
 }
 
-fun homeOrderDistanceConverter(input:Double?):String{
+fun homeOrderDistanceConverter(context: Context ,input:Double?):String{
     val roundedNumber = input?.let { BigDecimal(it).setScale(2, BigDecimal.ROUND_HALF_UP).toDouble() }
-    return ("$roundedNumber KM Away")
+    return ("$roundedNumber ${context.getString(R.string.home_chip_text_away)}")
 }

@@ -21,8 +21,7 @@ class VerticalOrderAdapter(
     private var orderList: List<Store?>? = emptyList<Store>().toMutableList()
 
     class VerticalOrderViewHolder(val binding: ItemHomeFoodDetailsVerticalScrollBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalOrderViewHolder {
         val binding =
@@ -42,11 +41,15 @@ class VerticalOrderAdapter(
     override fun onBindViewHolder(holder: VerticalOrderViewHolder, position: Int) {
         with(holder) {
             with(orderList?.get(position)) {
-                binding.itemFoodDetailsImg.load(BASE_IMAGE_URL + this?.image_url)
+
+                binding.itemFoodDetailsImg.load(BASE_IMAGE_URL + this?.image_url){
+                    placeholder(binding.root.context.getDrawable(R.drawable.img_placeholder))
+                    // Other options and transformations can be applied here
+                }
                 binding.itemFoodDetailsTxt.text = this?.name
                 binding.chip1Likes.text = this?.user_rate.toString()
-                binding.chip2Distance.text = homeOrderDistanceConverter(this?.distance)
-                binding.chip3Time.text = homeOrderDeliveryTimeConverter(this?.delivery_time,this?.delivery_time_max)
+                binding.chip2Distance.text = homeOrderDistanceConverter(binding.root.context,this?.distance)
+                binding.chip3Time.text = homeOrderDeliveryTimeConverter(binding.root.context,this?.delivery_time,this?.delivery_time_max)
                 binding.chip4Iqd.text = this?.user_rate_count.toString()
                 binding.chip5Ratings.text = this?.user_rate.toString()
                 binding.root.setOnClickListener {

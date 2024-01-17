@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.example.dummyapp.data.remote.dto.HomeMainResponse
 import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.repository.HomeMainRepository
@@ -25,9 +26,11 @@ class HomeMainViewModel(val repository: HomeMainRepository):ViewModel() {
     val homeScrollListData: LiveData<HomeScrollResponse>
         get() = homeScrollData
 
+    val scrollData=repository.getHomeScrollDetails().cachedIn(viewModelScope)
+
     init {
         fetchUsers()
-        fetchScrollUsers()
+//        fetchScrollUsers()
     }
 
     private fun fetchUsers() {
@@ -46,20 +49,20 @@ class HomeMainViewModel(val repository: HomeMainRepository):ViewModel() {
         }
     }
 
-    private fun fetchScrollUsers() {
-        viewModelScope.launch {
-            repository.getHomeScrollDetails()
-                .flowOn(Dispatchers.IO)
-                .catch { e ->
-                    // handle exception
-                    Log.e(TAG, "$e ", )
-                }
-                .collect {values->
-                    // list of users from the network
-                    Log.e(TAG, "fetchScrollUsers: $values")
-                    homeScrollData.value=values
-                }
-        }
-    }
+//    private fun fetchScrollUsers() {
+//        viewModelScope.launch {
+//            repository.getHomeScrollDetails()
+//                .flowOn(Dispatchers.IO)
+//                .catch { e ->
+//                    // handle exception
+//                    Log.e(TAG, "$e ", )
+//                }
+//                .collect {values->
+//                    // list of users from the network
+//                    Log.e(TAG, "fetchScrollUsers: $values")
+//                    homeScrollData.value=values
+//                }
+//        }
+//    }
 
 }

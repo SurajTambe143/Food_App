@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemOffersBinding
 import com.example.dummyapp.domain.model.entities.remote.homemain.Banner
 import com.example.dummyapp.utils.Constants.BASE_IMAGE_URL
@@ -26,7 +27,9 @@ class HomeOffersAdapter : RecyclerView.Adapter<HomeOffersAdapter.HomeOffersViewH
 
     inner class HomeOffersViewHolder(private val binding: ItemOffersBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Banner?) {
-            binding.imageView.load(BASE_IMAGE_URL +item?.image_url)
+            binding.imageView.load(BASE_IMAGE_URL +item?.image_url){
+                placeholder(binding.root.context.getDrawable(R.drawable.img_placeholder))
+            }
         }
     }
 

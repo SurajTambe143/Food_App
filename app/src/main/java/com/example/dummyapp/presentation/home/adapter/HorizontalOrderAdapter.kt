@@ -48,7 +48,9 @@ class HorizontalOrderAdapter(
                 binding.root.layoutParams = layoutParams
             }
             with(orderlist[position]) {
-                binding.itemFoodDetailsImg.load(this.imgOrder)
+                binding.itemFoodDetailsImg.load(this.imgOrder){
+                    placeholder(binding.root.context.getDrawable(R.drawable.img_placeholder))
+                }
                 binding.itemFoodDetailsTxt.text = this.txtTitle
                 binding.chip1Likes.text = this.txtLikes
                 binding.chip2Distance.text = this.txtDistance

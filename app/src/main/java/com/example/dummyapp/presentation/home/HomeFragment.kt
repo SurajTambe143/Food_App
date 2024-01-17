@@ -26,6 +26,8 @@ import com.example.dummyapp.domain.model.MenuItem
 import com.example.dummyapp.domain.model.OffersItem
 import com.example.dummyapp.domain.model.OrderFoodDetails
 import com.example.dummyapp.domain.model.StickyItem
+import com.example.dummyapp.paging.HomeScrollDetailsLoaderAdapter
+import com.example.dummyapp.paging.HomeScrollDetailsPagingAdapter
 import com.example.dummyapp.utils.gone
 import com.example.dummyapp.utils.visible
 import com.example.dummyapp.presentation.home.adapter.StickyViewAdapter
@@ -36,6 +38,7 @@ import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
 import com.example.dummyapp.utils.RetrofitBuilder
 import com.example.dummyapp.utils.encryptData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -57,6 +60,9 @@ class HomeFragment : Fragment() {
     private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
         findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
     }
+    private var scrollAdapter:HomeScrollDetailsPagingAdapter = HomeScrollDetailsPagingAdapter {
+        findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -74,29 +80,34 @@ class HomeFragment : Fragment() {
         }
 //        setUpUI()
         apiDemo()
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun apiDemo() {
         val encryptedData =
-            encryptData("xAwrEKbSeRFbPASuggNTXNPcHeJNaUNU", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
+            encryptData("ckmtjpJwTFVbJQhuDACdTPGYczXydqec", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
         Log.w(TAG, "KEY :  $encryptedData")
 
         val apiHelper = HomeMainRepositoryImpl(RetrofitBuilder.apiService)
         val myViewModel = ViewModelProvider(
             this, HomeMainViewModelFactory(apiHelper)
         )[HomeMainViewModel::class.java]
+        lifecycleScope.launch(Dispatchers.Main) {
+            myViewModel.scrollData.collect {
+                Log.e(TAG, "apiScroll Demo: $it")
+                scrollAdapter.submitData(it)
+            }
+        }
         myViewModel.listResponse.observe(viewLifecycleOwner) {
             homeMainResponse=it
             Log.e(TAG, "apiDemo: $it")
             setUpLists(it)
         }
-        myViewModel.homeScrollListData.observe(viewLifecycleOwner) {
-            homeScrollResponse=it
-            Log.e(TAG, "apiScroll Demo: $it")
-            verticalOrderAdapter.updateList(it.stores)
-        }
+//        myViewModel.homeScrollListData.observe(viewLifecycleOwner) {
+//            homeScrollResponse=it
+//            Log.e(TAG, "apiScroll Demo: $it")
+//            verticalOrderAdapter.updateList(it.stores)
+//        }
     }
 
     private fun setUpLists(homeMainResponse: HomeMainResponse) {
@@ -128,9 +139,13 @@ class HomeFragment : Fragment() {
         }
         val concatAdapter = ConcatAdapter(
             homeAdapter,
-            verticalOrderAdapter
+            scrollAdapter.withLoadStateHeaderAndFooter(
+                header = HomeScrollDetailsLoaderAdapter(),
+                footer = HomeScrollDetailsLoaderAdapter()
+            )
         )
         binding.rvHome.adapter = concatAdapter
+        binding.rvHome.setHasFixedSize(true)
         binding.rvHome.addOnScrollListener(
             RvStickyScroll(
                 homeViewList, binding.stickyHeader, layoutManager

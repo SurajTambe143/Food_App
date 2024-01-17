@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dummyapp.R
 import com.example.dummyapp.databinding.ItemBannerBinding
 import com.example.dummyapp.databinding.ItemOrderStatusBinding
 import com.example.dummyapp.databinding.ItemViewFoodCategoryBinding
@@ -53,7 +54,10 @@ class HomeAdapter(private val items: List<HomeView?>, private val onClicked: () 
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeView.BannerView) {
 //            binding.imgBanner.load(item.imgBanner)
-            binding.imgBanner.load(BASE_IMAGE_URL+item.imgBanner)
+            binding.imgBanner.load(BASE_IMAGE_URL+item.imgBanner){
+                placeholder(binding.root.context.getDrawable(R.drawable.img_placeholder))
+                // Other options and transformations can be applied here
+            }
         }
     }
 

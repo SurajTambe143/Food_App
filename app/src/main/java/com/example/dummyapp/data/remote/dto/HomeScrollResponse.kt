@@ -6,6 +6,6 @@ data class HomeScrollResponse(
     val message: Int? = 0,
     val server_time: String? = "",
     val store_count: Int? = 0,
-    val stores: List<Store?>? = listOf(),
+    val stores: List<Store> = listOf(),
     val success: Boolean? = false
 )

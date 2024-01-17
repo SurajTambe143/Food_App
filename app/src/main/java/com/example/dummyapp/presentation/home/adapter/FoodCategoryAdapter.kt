@@ -35,7 +35,9 @@ class FoodCategoryAdapter() :
                 binding.root.layoutParams = layoutParams
             }
             with(foodCategoryList?.get(position) ?: null) {
-                binding.imgCategory.load(BASE_IMAGE_URL+ (this?.image_url ?: 0))
+                binding.imgCategory.load(BASE_IMAGE_URL+ (this?.image_url ?: 0)){
+                    placeholder(binding.root.context.getDrawable(R.drawable.img_placeholder))
+                }
                 binding.txtFood.text = this?.name ?: ""
             }
         }
