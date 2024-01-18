@@ -39,15 +39,19 @@ import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
 import com.example.dummyapp.utils.APIResponse
 import com.example.dummyapp.utils.RetrofitBuilder
 import com.example.dummyapp.utils.encryptData
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.observeOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    lateinit var homeMainViewModel: HomeMainViewModel
     private var menuList: List<MenuItem> = emptyList()
     private var stickyList: List<StickyItem> = emptyList()
     private var foodCategoryList: List<FoodCategory> = emptyList()
@@ -78,6 +82,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        homeMainViewModel= ViewModelProvider(this)[HomeMainViewModel::class.java]
+
         val rotateAnimationInner= AnimationUtils.loadAnimation(requireActivity(), R.anim.customize_circular_progress_bar_inner)
         val rotateAnimationOuter = AnimationUtils.loadAnimation(requireActivity(), R.anim.customize_circular_progress_bar_outer)
         binding.loadingLayout.loadingProgressOuter.startAnimation(rotateAnimationOuter)
@@ -92,20 +98,16 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun apiDemo() {
         val encryptedData =
-            encryptData("ckmtjpJwTFVbJQhuDACdTPGYczXydqec", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
+            encryptData("rffjuQEcznYYmMDwvDZqcpfpeRAXJMve", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
         Log.w(TAG, "KEY :  $encryptedData")
 
-        val apiHelper = HomeMainRepositoryImpl(RetrofitBuilder.apiService)
-        val myViewModel = ViewModelProvider(
-            this, HomeMainViewModelFactory(apiHelper)
-        )[HomeMainViewModel::class.java]
         lifecycleScope.launch(Dispatchers.Main) {
-            myViewModel.scrollData.collect {
+            homeMainViewModel.scrollData.collect {
                 Log.e(TAG, "apiScroll Demo: $it")
                 scrollAdapter.submitData(it)
             }
         }
-        myViewModel.listResponse.observe(viewLifecycleOwner) {
+        homeMainViewModel.listResponse.observe(viewLifecycleOwner) {
             when(it){
                 is APIResponse.Loading -> {
                     binding.errorLayout.root.gone()

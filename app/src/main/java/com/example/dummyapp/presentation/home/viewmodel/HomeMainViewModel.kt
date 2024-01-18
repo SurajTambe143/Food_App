@@ -10,12 +10,15 @@ import com.example.dummyapp.data.remote.dto.HomeMainResponse
 import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.repository.HomeMainRepository
 import com.example.dummyapp.utils.APIResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeMainViewModel(val repository: HomeMainRepository):ViewModel() {
+@HiltViewModel
+class HomeMainViewModel @Inject constructor(val repository: HomeMainRepository):ViewModel() {
 
     private  val TAG = "HomeMainViewModel"
 

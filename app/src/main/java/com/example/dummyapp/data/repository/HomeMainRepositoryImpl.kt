@@ -11,8 +11,9 @@ import com.example.dummyapp.paging.HomeScrollDetailsPagingSource
 import com.example.dummyapp.utils.Body
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class HomeMainRepositoryImpl(private val homeMainService: HomeMainService) : HomeMainRepository {
+class HomeMainRepositoryImpl @Inject constructor(private val homeMainService: HomeMainService) : HomeMainRepository {
     override fun getHomeMainDetails() = flow {
         emit(
             homeMainService.getHomeMainDetails(

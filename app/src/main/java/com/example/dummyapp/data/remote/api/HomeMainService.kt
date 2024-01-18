@@ -17,7 +17,7 @@ interface HomeMainService {
         "longitude: 44.416270",
         "latitude: 33.341658",
         "app_version: 1.3.00",
-        "auth_key: Q+FaOir1hYjSQ0whPMDY1n9Km/G+n6uf89gqSkPFhZNaQv1ok7usZgkg2A3tnWqw",
+        "auth_key: fQ9ZV1JRipN2w6shdI62A+7LWjBtVcY6HVGlSw+KBmBR2RVN4TQND38o6BZ+8Ba3",
         "device_type: android",
         "language: en",
     )
@@ -28,7 +28,7 @@ interface HomeMainService {
         "longitude: 44.416270",
         "latitude: 33.341658",
         "app_version: 1.3.00",
-        "auth_key: Q+FaOir1hYjSQ0whPMDY1n9Km/G+n6uf89gqSkPFhZNaQv1ok7usZgkg2A3tnWqw",
+        "auth_key: fQ9ZV1JRipN2w6shdI62A+7LWjBtVcY6HVGlSw+KBmBR2RVN4TQND38o6BZ+8Ba3",
         "device_type: android",
         "language: en",
     )
