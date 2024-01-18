@@ -6,6 +6,7 @@ import com.example.dummyapp.data.remote.api.HomeMainService
 import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.model.entities.remote.homescroll.Store
 import com.example.dummyapp.utils.Body
+import com.example.dummyapp.utils.getHeaders
 
 class HomeScrollDetailsPagingSource(val homeHomeService: HomeMainService) :
     PagingSource<Int, Store>() {
@@ -21,6 +22,7 @@ class HomeScrollDetailsPagingSource(val homeHomeService: HomeMainService) :
         return try {
             val position = params.key ?: 1
             val response = homeHomeService.getHomeScrollDetails(
+                getHeaders(),
                 Body(
                     33.341658,
                     44.416270,

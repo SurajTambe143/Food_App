@@ -1,22 +1,21 @@
 package com.example.dummyapp.data.repository
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.liveData
 import com.example.dummyapp.data.remote.api.HomeMainService
-import com.example.dummyapp.data.remote.dto.HomeMainResponse
-import com.example.dummyapp.data.remote.dto.HomeScrollResponse
 import com.example.dummyapp.domain.repository.HomeMainRepository
 import com.example.dummyapp.paging.HomeScrollDetailsPagingSource
 import com.example.dummyapp.utils.Body
-import kotlinx.coroutines.flow.Flow
+import com.example.dummyapp.utils.getHeaders
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class HomeMainRepositoryImpl @Inject constructor(private val homeMainService: HomeMainService) : HomeMainRepository {
+class HomeMainRepositoryImpl(private val homeMainService: HomeMainService) : HomeMainRepository {
     override fun getHomeMainDetails() = flow {
+        Log.e("RepoImpl", "getHomeMainDetails KEY   : ${getHeaders()}", )
         emit(
             homeMainService.getHomeMainDetails(
+                getHeaders(),
                 Body(
                     33.341658,
                     44.416270,
@@ -48,4 +47,12 @@ class HomeMainRepositoryImpl @Inject constructor(private val homeMainService: Ho
 //            )
 //        )
 //    }
+
+
+    /**
+     * LoginHTTPClient
+     *   Interceptor
+     * NormalHttpClient
+     *   TokenInterceptor
+     */
 }

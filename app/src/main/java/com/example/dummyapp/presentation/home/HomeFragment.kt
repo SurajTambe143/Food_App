@@ -37,6 +37,7 @@ import com.example.dummyapp.presentation.home.model.HomeView
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModel
 import com.example.dummyapp.presentation.home.viewmodel.HomeMainViewModelFactory
 import com.example.dummyapp.utils.APIResponse
+import com.example.dummyapp.utils.Constants.HEADER_AUTH_KEY
 import com.example.dummyapp.utils.RetrofitBuilder
 import com.example.dummyapp.utils.encryptData
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,9 +64,9 @@ class HomeFragment : Fragment() {
     private var homeMainResponse: HomeMainResponse?=null
     private var homeScrollResponse: HomeScrollResponse?=null
     private val TAG = "HomeFragment"
-    private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
-        findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
-    }
+//    private var verticalOrderAdapter: VerticalOrderAdapter = VerticalOrderAdapter {
+//        findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
+//    }
     private var scrollAdapter:HomeScrollDetailsPagingAdapter = HomeScrollDetailsPagingAdapter {
         findNavController().navigate(R.id.action_homeFragment_to_foodMenuFragment)
     }
@@ -81,7 +82,9 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        HEADER_AUTH_KEY =
+            encryptData("rffjuQEcznYYmMDwvDZqcpfpeRAXJMve")
+        Log.w(TAG, "KEY :  $HEADER_AUTH_KEY")
         homeMainViewModel= ViewModelProvider(this)[HomeMainViewModel::class.java]
 
         val rotateAnimationInner= AnimationUtils.loadAnimation(requireActivity(), R.anim.customize_circular_progress_bar_inner)
@@ -97,9 +100,6 @@ class HomeFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun apiDemo() {
-        val encryptedData =
-            encryptData("rffjuQEcznYYmMDwvDZqcpfpeRAXJMve", "XHfZhnLrWOJyPZAW", "WMVYXBCU2ZUFVJ72")
-        Log.w(TAG, "KEY :  $encryptedData")
 
         lifecycleScope.launch(Dispatchers.Main) {
             homeMainViewModel.scrollData.collect {
